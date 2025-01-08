@@ -12,7 +12,7 @@ export class Element {
   }
 
   append(...children) {
-    this.#children = [...children];
+    this.#children = [...this.#children, ...children];
     this.#ref.append(...children.map((v) => v.ref));
   }
 
@@ -22,12 +22,12 @@ export class Element {
     });
   }
 
-  addListener(...args) {
-    this.#ref.addEventListener(...args);
+  addListener(event, listener, options = false) {
+    this.#ref.addEventListener(event, listener, options);
   }
 
-  removeListener(...args) {
-    this.#ref.removeEventListener(...args);
+  removeListener(event, listener, options = false) {
+    this.#ref.removeEventListener(event, listener, options);
   }
 
   toggleClass(name) {
@@ -38,12 +38,21 @@ export class Element {
     this.#ref.remove();
   }
 
+  removeChildren() {
+    this.#children.forEach((el) => el.remove());
+    this.#children.length = 0;
+  }
+
   set text(v) {
     this.#ref.textContent = v;
   }
 
   get text() {
     return this.#ref.textContent;
+  }
+
+  get children() {
+    return [...this.#children];
   }
 
   get ref() {
