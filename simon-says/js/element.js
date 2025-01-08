@@ -1,4 +1,4 @@
-export class Elelement {
+export class Element {
   #ref;
   #children = [];
 
@@ -12,7 +12,8 @@ export class Elelement {
   }
 
   append(...children) {
-    this.#ref.append(...children);
+    this.#children = [...children];
+    this.#ref.append(...children.map((v) => v.ref));
   }
 
   setAttribute(map) {
