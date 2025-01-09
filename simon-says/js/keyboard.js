@@ -1,8 +1,9 @@
-import { isInt, isIterable, isStr } from './helpers.js';
+import { isFunc, isInt, isIterable, isStr } from './helpers.js';
 import { Element } from './element.js';
 
 const MIN_HIGHLIGHT_TIO = 300;
 const MAX_HIGHLIGHT_TIO = 500;
+const DEF_KEYS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 const cls = {
   key: 'key',
@@ -13,35 +14,60 @@ const cls = {
 export class Keyboard {
   #element;
   #highlightTimeout = MIN_HIGHLIGHT_TIO;
-  #hasActiveKey;
+  #activeKey;
+  #onHit = null;
 
-  constructor({ keys } = {}) {
+  constructor({ keys = DEF_KEYS } = {}) {
     this.#element = new Element({ tag: 'ul', className: cls.keyboard });
     this.append(keys);
     this.#addInteractivity();
   }
 
+  #isValidKey = (key) => {
+    return key.length === 1 && !/\s/.test(key);
+  };
+
+  #isActiveKey = (key) => {
+    return key === this.#activeKey;
+  };
+
   #handleKeydown = (e) => {
-    if (e.repeat || this.#hasActiveKey || e.key.length > 1) {
+    if (this.#activeKey || e.repeat || !this.#isValidKey(e.key)) {
       return;
     }
-    const { code } = e;
-    const key = this.findKey(code.slice(-1));
+    const key = this.findKey(e.code.slice(-1));
+    if (!key) {
+      return;
+    }
+    this.#activeKey = key;
+    key.toggleClass(cls.keyActive);
+  };
 
-    if (key) {
-      this.#hasActiveKey = true;
-      key.toggleClass(cls.keyActive);
+  #handleKeyup = (e) => {
+    if (!this.#isValidKey(e.key)) {
+      return;
+    }
+    const key = this.findKey(e.code.slice(-1));
+    if (!key || !this.#isActiveKey(key)) {
+      return;
+    }
+    this.#activeKey = null;
+    key.toggleClass(cls.keyActive);
+  };
 
-      setTimeout(() => {
-        key.toggleClass(cls.keyActive);
-        this.#hasActiveKey = false;
-      }, this.highlightTimeout);
+  #handleMousedown = (e) => {
+    if (!e.target.classList.contains(cls.key)) {
+      return;
+    }
+    if (this.#activeKey) {
+      return;
     }
   };
 
   #addInteractivity = () => {
-    //document.addEventListener('keyup', () => (this.#hasActiveKey = false));
     document.addEventListener('keydown', this.#handleKeydown);
+    document.addEventListener('keyup', this.#handleKeyup);
+    this.#element.ref.addEventListener('mousedown', this.#handleMousedown);
   };
 
   findKey(text) {
@@ -55,14 +81,15 @@ export class Keyboard {
       console.debug('"keys" iterable expected');
       return;
     }
-    const children = [...keys].map(
-      (val) =>
-        new Element({
-          tag: 'li',
-          text: val.toLocaleUpperCase(),
-          className: cls.key,
-        })
-    );
+    const children = [...keys].map((v) => {
+      const el = new Element({
+        tag: 'li',
+        text: v.toLocaleUpperCase(),
+        className: cls.key,
+      });
+
+      return el;
+    });
     this.#element.append(...children);
   }
 
@@ -82,5 +109,9 @@ export class Keyboard {
     if (isInt(v) && v <= MAX_HIGHLIGHT_TIO && v >= MIN_HIGHLIGHT_TIO) {
       this.#highlightTimeout = v;
     }
+  }
+
+  set onHit(handler) {
+    this.#onHit = isFunc(handler) ? handler : null;
   }
 }
