@@ -1,14 +1,37 @@
-import { fitIntoRange, isFunc, isInt, isIterable, isStr } from './helpers.js';
 import { Element } from './element.js';
+import {
+  fitIntoRange,
+  isFunc,
+  isInt,
+  isIterable,
+  isStr,
+  rndInt,
+  getRandomColor,
+  sleep,
+} from './helpers.js';
 
 const MIN_HIGHLIGHT_TIO = 300;
 const DEF_KEYS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const BASE_COLOR = '#ffcfcf';
 
 const cls = {
   key: 'key',
   keyActive: 'key--active',
   keyboard: 'keyboard',
 };
+
+const setColor = ({ ref: { style } }) => {
+  const rnd = rndInt(25, 30);
+  const co1 = getRandomColor().hex;
+  const mixed = `color-mix(in oklab, ${co1} ${rnd}%, ${BASE_COLOR} ${50}%)`;
+
+  style.backgroundColor = mixed;
+  style.border = `2px solid ${mixed}`;
+};
+
+//
+// Keyboard
+//
 
 export class Keyboard {
   #element;
@@ -114,11 +137,11 @@ export class Keyboard {
     this.#element.ref.style.pointerEvents = v ? '' : 'none';
   }
 
-  activateByText(text, timeout = MIN_HIGHLIGHT_TIO) {
+  #activate = async (str, timeout) => {
     if (!isInt(timeout) || timeout < MIN_HIGHLIGHT_TIO) {
-      return;
+      timeout = MIN_HIGHLIGHT_TIO;
     }
-    const key = this.findKeyByText(text);
+    const key = this.findKeyByText(str);
     if (!key) {
       return;
     }
@@ -126,10 +149,36 @@ export class Keyboard {
     this.allowPointerEvents(false);
 
     key.toggleClass(cls.keyActive);
-    setTimeout(() => key.toggleClass(cls.keyActive), timeout);
+    await sleep(timeout);
+    key.toggleClass(cls.keyActive);
 
     this.allowPointerEvents(true);
     this.#activeKey = null;
+  };
+
+  async activate({ sequence: seq, duration, delay } = {}) {
+    if (!isStr(seq) || !seq) {
+      return;
+    }
+    if (!isInt(delay) || delay < 0) {
+      delay = 0;
+    }
+    for (let i = 0; i < seq.length; i += 1) {
+      await this.#activate(seq[i], duration);
+      if (i === seq.length - 1) {
+        break;
+      }
+      await sleep(delay);
+    }
+  }
+
+  show(regex) {
+    if (!(regex instanceof RegExp)) {
+      return;
+    }
+    this.keys.forEach((key) => {
+      key.ref.style.display = regex.test(key.text) ? '' : 'none';
+    });
   }
 
   findKeyByText(text) {
@@ -148,11 +197,14 @@ export class Keyboard {
       return;
     }
     const children = [...keys].map((v) => {
-      return new Element({
+      const key = new Element({
         tag: 'li',
         text: v.toLocaleUpperCase(),
         className: cls.key,
       });
+      setColor(key);
+
+      return key;
     });
     this.#element.append(...children);
   }
