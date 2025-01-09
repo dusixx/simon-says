@@ -2,13 +2,18 @@ export class Element {
   #ref;
   #children = [];
 
-  constructor({ tag = 'div', className = '', text = '' }, ...children) {
-    const ref = document.createElement(tag);
-    ref.className = className;
-    ref.textContent = text;
+  constructor(props, ...children) {
+    const { tag = 'div', className, text, ...rest } = props ?? '';
 
+    const ref = document.createElement(tag);
+
+    if (className) {
+      ref.className = className;
+    }
+    ref.textContent = text;
     this.#ref = ref;
     this.append(...children);
+    this.setAttribute(rest);
   }
 
   append(...children) {
@@ -31,7 +36,7 @@ export class Element {
   }
 
   toggleClass(name) {
-    this.#ref.classList.toggle(name);
+    return this.#ref.classList.toggle(name);
   }
 
   remove() {
