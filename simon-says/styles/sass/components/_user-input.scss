@@ -1,0 +1,30 @@
+.user-input {
+  width: 100%;
+  padding: 10px;
+
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  line-height: 1;
+  text-align: center;
+
+  color: #444444;
+  background-color: whitesmoke;
+  border: 1px solid gainsboro;
+  border-radius: 30px;
+  outline: none;
+
+  user-select: none;
+  pointer-events: none;
+
+  @media screen and (width > 620px) {
+    font-size: 30px;
+    width: 60%;
+  }
+}
+
+.user-input::placeholder {
+  opacity: 0.3;
+  //transform: scale(0.7);
+  text-transform: uppercase;
+}

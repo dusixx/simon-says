@@ -1,0 +1,12 @@
+@mixin focused() {
+  &:hover,
+  &:focus-visible {
+    @content;
+  }
+}
+
+@mixin non-interactive() {
+  pointer-events: none;
+  user-select: none;
+  @content;
+}

@@ -28,6 +28,10 @@ a {
   text-decoration: none;
 }
 
+body {
+  font-family: "Nunito", sans-serif;
+}
+
 /*! modern-normalize v3.0.1 | MIT License | https://github.com/sindresorhus/modern-normalize */
 /*
 Document
@@ -207,4 +211,192 @@ Add the correct display in Chrome and Safari.
 */
 summary {
   display: list-item;
+}
+
+.wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 40px;
+  max-width: 900px;
+  min-width: 375px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0 auto;
+}
+
+.keyboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 12px;
+  padding: 25px;
+  border: 2px solid gainsboro;
+  border-radius: 40px;
+}
+@media screen and (width > 400px) {
+  .keyboard {
+    padding: 40px;
+  }
+}
+
+.key {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+}
+@media screen and (width > 420px) {
+  .key {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.key:active,
+.key--active {
+  background-color: #ff3b6c !important;
+  border-color: #ff3b6c !important;
+  color: white;
+}
+
+.user-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  line-height: 1;
+  text-align: center;
+  color: #444444;
+  background-color: whitesmoke;
+  border: 1px solid gainsboro;
+  border-radius: 30px;
+  outline: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+}
+@media screen and (width > 620px) {
+  .user-input {
+    font-size: 30px;
+    width: 60%;
+  }
+}
+
+.user-input::-webkit-input-placeholder {
+  opacity: 0.3;
+  text-transform: uppercase;
+}
+
+.user-input::-moz-placeholder {
+  opacity: 0.3;
+  text-transform: uppercase;
+}
+
+.user-input:-ms-input-placeholder {
+  opacity: 0.3;
+  text-transform: uppercase;
+}
+
+.user-input::-ms-input-placeholder {
+  opacity: 0.3;
+  text-transform: uppercase;
+}
+
+.user-input::placeholder {
+  opacity: 0.3;
+  text-transform: uppercase;
+}
+
+.btn, .btn-primary {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: inherit;
+  border-style: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.btn-primary {
+  height: 50px;
+  padding: 10px;
+  font-size: 22px;
+  letter-spacing: 0.1rem;
+  line-height: 1;
+  text-transform: uppercase;
+  color: white;
+  background-color: rgb(112, 55, 204);
+  border-radius: 30px;
+}
+.btn-primary:disabled {
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  opacity: 0.5;
+}
+
+.controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  gap: 40px;
+  width: 100%;
+}
+
+.controls__start,
+.controls__repeat {
+  width: 100%;
+}
+
+.controls__repeat {
+  background-color: #31a115;
 }/*# sourceMappingURL=main.css.map */

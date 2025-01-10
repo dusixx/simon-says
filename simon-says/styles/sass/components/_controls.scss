@@ -1,0 +1,15 @@
+.controls {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 40px;
+  width: 100%;
+}
+
+.controls__start,
+.controls__repeat {
+  width: 100%;
+}
+
+.controls__repeat {
+  background-color: #31a115;
+}
