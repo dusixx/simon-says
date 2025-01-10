@@ -8,5 +8,12 @@
 @mixin non-interactive() {
   pointer-events: none;
   user-select: none;
+  opacity: 0.5;
   @content;
+}
+
+@mixin main-transition($props: 'all') {
+  transition-duration: 250ms;
+  transition-timing-function: ubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: #{$props};
 }

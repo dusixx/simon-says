@@ -6,7 +6,7 @@
   gap: 12px;
   padding: 25px;
 
-  border: 2px solid gainsboro;
+  //border: 1px solid gainsboro;
   border-radius: 40px;
 
   @media screen and (width > 400px) {
@@ -30,6 +30,8 @@
     width: 50px;
     height: 50px;
   }
+
+  //@include main-transition('background-color color border-color');
 }
 
 $accentColor: #ff3b6c;

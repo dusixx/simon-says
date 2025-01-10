@@ -1,13 +1,17 @@
 .controls {
   display: flex;
-  justify-content: space-evenly;
-  gap: 40px;
+  gap: 50px;
   width: 100%;
+  margin-top: 20px;
+
+  @media screen and (width > 768px) {
+    gap: 100px;
+  }
 }
 
 .controls__start,
 .controls__repeat {
-  width: 100%;
+  width: 90%;
 }
 
 .controls__repeat {

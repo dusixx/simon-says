@@ -249,7 +249,6 @@ summary {
       flex-wrap: wrap;
   gap: 12px;
   padding: 25px;
-  border: 2px solid gainsboro;
   border-radius: 40px;
 }
 @media screen and (width > 400px) {
@@ -295,8 +294,7 @@ summary {
   width: 100%;
   padding: 10px;
   font-size: 24px;
-  font-weight: 600;
-  letter-spacing: 0.2rem;
+  letter-spacing: 0.1rem;
   line-height: 1;
   text-align: center;
   color: #444444;
@@ -385,18 +383,85 @@ summary {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  gap: 40px;
+  gap: 50px;
   width: 100%;
+  margin-top: 20px;
+}
+@media screen and (width > 768px) {
+  .controls {
+    gap: 100px;
+  }
 }
 
 .controls__start,
 .controls__repeat {
-  width: 100%;
+  width: 90%;
 }
 
 .controls__repeat {
   background-color: #31a115;
+}
+
+.stats {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.round,
+.difficulty {
+  color: #444444;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 8px;
+}
+
+.difficulty span:nth-of-type(1) {
+  display: none;
+}
+.difficulty:disabled {
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  opacity: 0.5;
+}
+
+.difficulty__select {
+  position: relative;
+  -webkit-appearance: unset;
+     -moz-appearance: unset;
+          appearance: unset;
+  text-transform: capitalize;
+  text-align: center;
+  outline: none;
+  padding: 5px 10px;
+  color: #444444;
+  background-color: whitesmoke;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 20px;
+  display: inline-block;
+  margin: 0;
+  outline: none;
+}
+
+.page-title {
+  font-size: 100px;
+  font-weight: 900;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
 }/*# sourceMappingURL=main.css.map */

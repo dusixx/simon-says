@@ -1,0 +1,42 @@
+.stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.round,
+.difficulty {
+  color: #444444;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.difficulty {
+  & span:nth-of-type(1) {
+    display: none;
+  }
+  &:disabled {
+    @include non-interactive;
+  }
+}
+
+.difficulty__select {
+  position: relative;
+  appearance: unset;
+  text-transform: capitalize;
+  text-align: center;
+  outline: none;
+  padding: 5px 10px;
+  color: #444444;
+  background-color: whitesmoke;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 20px;
+
+  display: inline-block;
+  margin: 0;
+  outline: none;
+}
