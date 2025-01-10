@@ -1,6 +1,5 @@
 import { Element } from './element.js';
 import {
-  fitIntoRange,
   isFunc,
   isInt,
   isIterable,
@@ -8,11 +7,11 @@ import {
   rndInt,
   getRandomColor,
   sleep,
+  getColorMixCSS,
 } from './helpers.js';
 
 const MIN_HIGHLIGHT_TIO = 300;
 const DEF_KEYS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-const BASE_COLOR = '#ffcfcf';
 
 const cls = {
   key: 'key',
@@ -21,9 +20,7 @@ const cls = {
 };
 
 const setColor = ({ ref: { style } }) => {
-  const rnd = rndInt(25, 30);
-  const co1 = getRandomColor().hex;
-  const mixed = `color-mix(in oklab, ${co1} ${rnd}%, ${BASE_COLOR} ${50}%)`;
+  const mixed = getColorMixCSS();
 
   style.backgroundColor = mixed;
   style.border = `2px solid ${mixed}`;
@@ -35,8 +32,8 @@ const setColor = ({ ref: { style } }) => {
 
 export class Keyboard {
   #element;
-  #highlightTimeout = MIN_HIGHLIGHT_TIO;
   #activeKey;
+  #disabled;
   #onHit = null;
 
   constructor({ keys = DEF_KEYS } = {}) {
@@ -59,9 +56,14 @@ export class Keyboard {
   };
 
   #handleKeydown = (e) => {
+    if (this.#disabled) {
+      return;
+    }
     // there is already an active key
     // Avoid repeating same key
     if (this.#activeKey) {
+      // disable all keyboard side effects
+      e.preventDefault();
       return;
     }
     // skip invalid chars
@@ -82,6 +84,9 @@ export class Keyboard {
   };
 
   #handleKeyup = (e) => {
+    if (this.#disabled) {
+      return;
+    }
     // nothing to reset
     if (!this.#activeKey) {
       return;
@@ -111,25 +116,17 @@ export class Keyboard {
   };
 
   // active key should be cleared even if button was released outside the keyboard
-  #handleMouseup = (e) => {
+  #handleDocumentMouseup = (e) => {
     if (this.#wasActivatedByKeyboard()) {
       return;
     }
     this.#activeKey = null;
   };
 
-  #handleDocumentKeydown = (e) => {
-    // disable all keyboard side effects
-    if (this.#activeKey) {
-      e.preventDefault();
-    }
-  };
-
   #addInteractivity = () => {
     document.addEventListener('keydown', this.#handleKeydown);
     document.addEventListener('keyup', this.#handleKeyup);
-    document.addEventListener('mouseup', this.#handleMouseup);
-    document.addEventListener('keydown', this.#handleDocumentKeydown);
+    document.addEventListener('mouseup', this.#handleDocumentMouseup);
     this.#element.ref.addEventListener('mousedown', this.#handleMousedown);
   };
 
@@ -146,13 +143,11 @@ export class Keyboard {
       return;
     }
     this.#activeKey = key;
-    this.allowPointerEvents(false);
 
     key.toggleClass(cls.keyActive);
     await sleep(timeout);
     key.toggleClass(cls.keyActive);
 
-    this.allowPointerEvents(true);
     this.#activeKey = null;
   };
 
@@ -163,6 +158,8 @@ export class Keyboard {
     if (!isInt(delay) || delay < 0) {
       delay = 0;
     }
+    this.disabled = true;
+
     for (let i = 0; i < seq.length; i += 1) {
       await this.#activate(seq[i], duration);
       if (i === seq.length - 1) {
@@ -170,6 +167,7 @@ export class Keyboard {
       }
       await sleep(delay);
     }
+    this.disabled = false;
   }
 
   show(regex) {
@@ -202,7 +200,9 @@ export class Keyboard {
         text: v.toLocaleUpperCase(),
         className: cls.key,
       });
-      setColor(key);
+      const mixed = getColorMixCSS();
+      key.ref.style.backgroundColor = mixed;
+      key.ref.style.border = `2px solid ${mixed}`;
 
       return key;
     });
@@ -217,7 +217,21 @@ export class Keyboard {
     return this.#element.ref;
   }
 
+  get underlyingElement() {
+    return this.#element;
+  }
+
   set onHit(handler) {
     this.#onHit = isFunc(handler) ? handler : null;
+  }
+
+  get disabled() {
+    return this.#disabled;
+  }
+
+  set disabled(v) {
+    this.allowPointerEvents(!Boolean(v));
+    this.#disabled = Boolean(v);
+    //this.#element.ref.style.opacity = v ? '0.5' : '';
   }
 }
