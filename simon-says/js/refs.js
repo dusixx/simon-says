@@ -1,109 +1,66 @@
-import { getColorMixCSS, getRandomColor, rndInt, sleep } from './helpers.js';
+import { getColorMixCSS } from './helpers.js';
 import { Keyboard } from './keyboard.js';
 import { Element } from './element.js';
+import { Difficulty } from './difficulty.js';
+import { RoundsCounter } from './rounds-counter.js';
+import { Button } from './button.js';
+import { TextInput } from './text-input.js';
 
-//
-// User input
-//
+export const keyboard = new Keyboard();
+export const difficulty = new Difficulty();
+export const roundsCounter = new RoundsCounter();
 
-export const userInput = new Element({
-  tag: 'input',
-  type: 'text',
-  className: 'user-input',
+export const userInput = new TextInput({
   tabIndex: -1,
-  maxLength: 10,
-  placeholder: 'And you repeat',
+  readonly: '',
+  placeholder: 'Your sequence',
+  className: 'user-input',
 });
 
-//
-// Controls
-//
-
-export const btnStart = new Element({
-  tag: 'button',
-  type: 'button',
-  text: 'Start',
+export const btnStart = new Button({
+  text: 'Start🚀',
   className: 'controls__start btn-primary',
 });
 
-export const btnRepeat = new Element({
-  tag: 'button',
-  type: 'button',
+export const btnRepeat = new Button({
   text: 'Repeat',
   className: 'controls__repeat btn-primary',
 });
 
 export const controls = new Element(
   { className: 'controls' },
-  btnStart,
-  btnRepeat
+  btnStart.underlyingElement,
+  btnRepeat.underlyingElement
 );
 
-//
-// Difficulty
-//
-
-export const difficultySelect = new Element(
-  { tag: 'select', className: 'difficulty__select' },
-  ...['easy', 'medium', 'hard'].map(
-    (value) => new Element({ tag: 'option', value, text: value })
-  )
+const stats = new Element(
+  { className: 'stats' },
+  roundsCounter.underlyingElement,
+  difficulty.underlyingElement
 );
 
-const difficulty = new Element(
-  { className: 'difficulty' },
-  new Element({
-    tag: 'span',
-    text: 'Difficulty:',
-    className: 'difficulty__label',
-  }),
-  difficultySelect
+const logo = new Element(
+  {
+    tag: 'div',
+    className: 'logo',
+  },
+  ...[...'🦜SimonSays'].map((text) => {
+    const el = new Element({ tag: 'span', text });
+    const mixed = getColorMixCSS({ perecent: 50, baseColor: '#ff43f7' });
+    el.ref.style.color = mixed;
+
+    return el;
+  })
 );
 
-//
-// Round
-//
-
-export const curRound = new Element({
-  tag: 'span',
-  className: 'round__current',
-  text: 1,
-});
-
-export const totalRounds = new Element({
-  tag: 'span',
-  className: 'round__total',
-  text: 5,
-});
-
-const round = new Element({ className: 'round' }, curRound, totalRounds);
-curRound.ref.before('Round: ');
-curRound.ref.after('/');
-
-const stats = new Element({ className: 'stats' }, difficulty, round);
-
-// const pageTitle = new Element(
-//   {
-//     tag: 'h1',
-//     className: 'page-title',
-//   },
-//   ...[...'simon☺says'].map((text) => {
-//     const el = new Element({ tag: 'span', text });
-//     const mixed = getColorMixCSS({ perecent: 100, baseColor: 'violet' });
-//     el.ref.style.color = mixed;
-
-//     return el;
-//   })
-// );
-
-export const keyboard = new Keyboard();
+const header = new Element({ tag: 'header', className: 'header' }, logo, stats);
 
 const main = new Element(
   { tag: 'main' },
   new Element(
     { className: 'wrapper' },
-    stats,
-    userInput,
+    header,
+    userInput.underlyingElement,
     keyboard.underlyingElement,
     controls
   )
