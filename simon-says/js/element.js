@@ -27,6 +27,10 @@ export class Element {
     });
   }
 
+  removeAttribute(name) {
+    this.#ref.removeAttribute(name);
+  }
+
   addListener(event, listener, options = false) {
     this.#ref.addEventListener(event, listener, options);
   }
@@ -35,8 +39,8 @@ export class Element {
     this.#ref.removeEventListener(event, listener, options);
   }
 
-  toggleClass(name) {
-    return this.#ref.classList.toggle(name);
+  toggleClass(name, force) {
+    return this.#ref.classList.toggle(name, force);
   }
 
   remove() {
