@@ -4,14 +4,14 @@ import { isFunc } from './helpers.js';
 export class Button {
   #element;
   #onClick;
-  #name;
 
-  constructor({ text = '', className = '' } = {}) {
+  constructor({ text = '', className = '', ...rest } = {}) {
     this.#element = new Element({
       tag: 'button',
       type: 'button',
       className,
       text,
+      ...rest,
     });
   }
 
@@ -24,16 +24,12 @@ export class Button {
     }
   }
 
-  hide(f = true) {
-    this.#element.ref.style.display = f ? 'none' : '';
+  hide() {
+    this.#element.ref.style.display = 'none';
   }
 
-  get name() {
-    return this.#name;
-  }
-
-  set name(v) {
-    this.#name = `${v}`;
+  show() {
+    this.#element.ref.style.display = '';
   }
 
   get text() {

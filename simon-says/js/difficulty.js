@@ -9,7 +9,7 @@ export class Difficulty {
 
   constructor(values = DEF_VALUES) {
     if (!Array.isArray(values)) {
-      return;
+      throw TypeError('"values" array expected');
     }
     const el = new Element(
       { tag: 'select', className: 'difficulty' },
@@ -18,6 +18,14 @@ export class Difficulty {
       )
     );
     this.#element = el;
+  }
+
+  hide() {
+    this.#element.ref.style.display = 'none';
+  }
+
+  show() {
+    this.#element.ref.style.display = '';
   }
 
   set onChange(handler) {

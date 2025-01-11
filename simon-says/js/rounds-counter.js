@@ -5,15 +5,15 @@ export class RoundsCounter {
   #element;
   #curRound;
   #max;
-  #onMaxReaching;
+  #value;
 
-  constructor({ min = 1, max = 5 } = {}) {
-    if (!isInt(min) || !isInt(max) || min > max) {
-      throw TypeError('integers expected (min <= max)');
+  constructor({ start = 1, max = 5 } = {}) {
+    if (!isInt(start) || !isInt(max) || start > max) {
+      throw TypeError('integers expected (start <= max)');
     }
     const curRound = new Element({
       tag: 'span',
-      text: min,
+      text: start,
     });
     this.#element = new Element(
       { className: 'rounds-counter' },
@@ -26,26 +26,46 @@ export class RoundsCounter {
     curRound.ref.before('Round: ');
     curRound.ref.after('/');
 
+    this.#value = start;
     this.#curRound = curRound;
     this.#max = max;
   }
 
-  set onMaxReaching(handler) {
-    this.#onMaxReaching = isFunc(handler) ? handler : null;
+  hide() {
+    this.#element.ref.style.display = 'none';
+  }
+
+  show() {
+    this.#element.ref.style.display = '';
+  }
+
+  set visibile(v) {
+    const { style } = this.#element.ref;
+    if (v) {
+      style.visibility = 'visible';
+      style.pointerEvents = '';
+      style.opacity = '';
+    } else {
+      style.visibility = 'hidden';
+      style.pointerEvents = 'none';
+      style.opacity = '0';
+    }
   }
 
   get value() {
-    return this.#curRound.ref.text;
+    return this.#value;
   }
 
   set value(v) {
     if (!isInt(v) || v > this.#max) {
       return;
     }
-    if (v === this.#max) {
-      this.#onMaxReaching?.();
-    }
-    this.#curRound.ref.text = v;
+    this.#value = v;
+    this.#curRound.text = this.#value;
+  }
+
+  get max() {
+    return this.#max;
   }
 
   get ref() {
