@@ -3,14 +3,15 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 12px;
-  padding: 25px;
+  gap: 15px;
 
-  //border: 1px solid gainsboro;
+  width: 100%;
+  padding: 25px 0;
+
   border-radius: 40px;
 
   @media screen and (width > 400px) {
-    padding: 40px;
+    padding: 40px 0;
   }
 }
 
@@ -19,8 +20,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 
   border-radius: 50%;
   user-select: none;
@@ -30,8 +31,6 @@
     width: 50px;
     height: 50px;
   }
-
-  //@include main-transition('background-color color border-color');
 }
 
 $accentColor: #ff3b6c;
