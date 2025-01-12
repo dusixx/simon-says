@@ -1,5 +1,11 @@
-import { Element } from './element.js';
-import { isFunc, isInt, isStr, sleep, getColorMixCSS } from './helpers.js';
+import {
+  Element,
+  isFunc,
+  isInt,
+  isStr,
+  sleep,
+  getColorMixCSS,
+} from '../utils/index.js';
 
 const MIN_HIGHLIGHT_TIO = 300;
 const DEF_KEYS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -46,8 +52,13 @@ export class Keyboard {
   };
 
   #handleKeydown = (e) => {
-    if (this.#disabled || this.#active || !this.#isValidChar(e)) {
+    // there is already an active key (avoid repeating same key)
+    if (this.#active) {
+      // disable all keyboard side effects
       e.preventDefault();
+      return;
+    }
+    if (this.#disabled || !this.#isValidChar(e)) {
       return;
     }
     const char = e.code.slice(-1);
@@ -68,7 +79,6 @@ export class Keyboard {
 
   #handleKeyup = (e) => {
     if (this.#disabled || !this.#active || !this.#isValidChar(e)) {
-      e.preventDefault();
       return;
     }
     const char = e.code.slice(-1);
@@ -132,7 +142,7 @@ export class Keyboard {
   };
 
   async highlight({ sequence: seq, duration, delay } = {}) {
-    if (!isStr(seq) || !seq) {
+    if (!isStr(seq)) {
       return;
     }
     delay = !isInt(delay) || delay < 0 ? 0 : delay;
@@ -191,6 +201,15 @@ export class Keyboard {
     this.#element.append(...children);
   }
 
+  clearActive() {
+    this.#active?.key?.toggleClass(cls.keyActive, false);
+    this.#active = null;
+  }
+
+  get active() {
+    return this.#active;
+  }
+
   get disabled() {
     return this.#disabled;
   }
@@ -200,8 +219,7 @@ export class Keyboard {
     this.#disabled = Boolean(v);
     // clear active if exists
     if (v) {
-      this.#active?.key?.toggleClass(cls.keyActive, false);
-      this.#active = null;
+      this.clearActive();
     }
   }
 

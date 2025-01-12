@@ -1,5 +1,4 @@
-import { Element } from './element.js';
-import { isFunc } from './helpers.js';
+import { Element, isFunc } from '../utils/index.js';
 
 const SUCCESS_CSS = `
   color: rgb(136 183 99);

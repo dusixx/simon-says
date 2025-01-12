@@ -1,10 +1,12 @@
-import { getColorMixCSS } from './helpers.js';
-import { Keyboard } from './keyboard.js';
-import { Element } from './element.js';
-import { Difficulty } from './difficulty.js';
-import { RoundsCounter } from './rounds-counter.js';
-import { Button } from './button.js';
-import { TextInput } from './text-input.js';
+import { Element, getColorMixCSS } from '../utils/index.js';
+
+import {
+  Keyboard,
+  Difficulty,
+  RoundsCounter,
+  Button,
+  TextInput,
+} from '../components/index.js';
 
 export const keyboard = new Keyboard();
 export const difficulty = new Difficulty();
@@ -23,7 +25,7 @@ export const btnStart = new Button({
 });
 
 export const btnRepeat = new Button({
-  text: 'Repeat',
+  text: 'Repeat the sequence',
   className: 'controls__repeat btn-primary',
 });
 
@@ -55,15 +57,13 @@ const logo = new Element(
 
 const header = new Element({ tag: 'header', className: 'header' }, logo, stats);
 
-const main = new Element(
-  { tag: 'main' },
-  new Element(
-    { className: 'wrapper' },
-    header,
-    userInput.underlyingElement,
-    keyboard.underlyingElement,
-    controls
-  )
+const wrapper = new Element(
+  { className: 'wrapper' },
+  header,
+  userInput.underlyingElement,
+  keyboard.underlyingElement,
+  controls
 );
 
+const main = new Element({ tag: 'main' }, wrapper);
 document.body.append(main.ref);

@@ -231,7 +231,7 @@ summary {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  max-width: 800px;
+  max-width: 739px;
   min-width: 375px;
   padding-left: 8px;
   padding-right: 8px;
@@ -412,7 +412,7 @@ summary {
   height: 70px;
   padding: 20px;
 }
-@media screen and (width > 768px) {
+@media screen and (width > 538px) {
   .controls__start,
   .controls__repeat {
     height: unset;

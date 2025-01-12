@@ -1,4 +1,4 @@
-import { sleep, rndInt } from './helpers.js';
+import { sleep, rndInt } from '../utils/index.js';
 import * as refs from './refs.js';
 
 const {

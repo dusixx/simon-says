@@ -42,6 +42,18 @@ export const applyColorAlpha = (hexColor, opacity = 1) => {
   return `${hexColor}${alphaHex}`;
 };
 
+export const getColorMixCSS = ({
+  min = 25,
+  max = 30,
+  perecent = 50,
+  baseColor = '#ffcfcf',
+} = {}) => {
+  const rnd = rndInt(min, max);
+  const co1 = getRandomColor().hex;
+
+  return `color-mix(in oklab, ${co1} ${rnd}%, ${baseColor} ${perecent}%)`;
+};
+
 export const sleep = async (tio) => {
   await new Promise((resolve) => setTimeout(resolve, tio));
 };

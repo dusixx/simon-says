@@ -1,5 +1,4 @@
-import { Element } from './element.js';
-import { isInt } from './helpers.js';
+import { isInt, Element } from '../utils/index.js';
 
 export class RoundsCounter {
   #element;
