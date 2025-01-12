@@ -19,9 +19,8 @@ const cls = {
   keyboard: 'keyboard',
 };
 
-const setColor = ({ ref: { style } }) => {
+const setStyles = ({ ref: { style } }) => {
   const mixed = getColorMixCSS();
-
   style.backgroundColor = mixed;
   style.border = `2px solid ${mixed}`;
 };
@@ -55,6 +54,7 @@ export class Keyboard {
     return this.#keysMap[char].hidden;
   };
 
+  // TODO: this.#activeKey -> {key, iniciator: "keydown|mousedown"}
   #wasActivatedByKeyboard = () => {
     const { pointerEvents } = this.#element.ref.style;
     return this.#activeKey && pointerEvents === 'none';
@@ -142,11 +142,11 @@ export class Keyboard {
     this.#element.ref.style.pointerEvents = v ? '' : 'none';
   }
 
-  #activate = async (str, timeout) => {
+  #highlightKeyByChar = async (ch, timeout) => {
     if (!isInt(timeout) || timeout < MIN_HIGHLIGHT_TIO) {
       timeout = MIN_HIGHLIGHT_TIO;
     }
-    const key = this.findKeyByText(str);
+    const key = this.findKeyByText(ch);
     if (!key) {
       return;
     }
@@ -159,7 +159,7 @@ export class Keyboard {
     this.#activeKey = null;
   };
 
-  async activate({ sequence: seq, duration, delay } = {}) {
+  async highlight({ sequence: seq, duration, delay } = {}) {
     if (!isStr(seq) || !seq) {
       return;
     }
@@ -169,7 +169,7 @@ export class Keyboard {
     this.disabled = true;
 
     for (let i = 0; i < seq.length; i += 1) {
-      await this.#activate(seq[i], duration);
+      await this.#highlightKeyByChar(seq[i], duration);
       if (i === seq.length - 1) {
         break;
       }
@@ -192,26 +192,7 @@ export class Keyboard {
         keyData.hidden = true;
       }
     });
-    // this.keys.forEach((key) => {
-    //   key.ref.style.display = regex.test(key.text) ? '' : 'none';
-    // });
   }
-
-  set difficulty(v) {
-    if (/easy/i.test(v)) {
-      this.showKeys(/[0-9]/);
-    } else if (/medium/i.test(v)) {
-      this.showKeys(/[a-z]/i);
-    } else if (/hard/i.test(v)) {
-      this.showKeys(/.*/);
-    }
-  }
-
-  // findKeyByText(text) {
-  //   return isStr(text) && text.length === 1
-  //     ? this.keys.find((key) => key.text === text.toLocaleUpperCase())
-  //     : null;
-  // }
 
   findKeyByText(ch) {
     return this.#keysMap[ch]?.key;
@@ -221,10 +202,13 @@ export class Keyboard {
     return ref ? this.keys.find((key) => key.ref === ref) : null;
   }
 
+  repaint() {
+    this.keys.forEach(setStyles);
+  }
+
   appendKeys(keys) {
     if (!isStr(keys)) {
-      console.debug('"keys" string expected');
-      return;
+      throw TypeError('"keys" string expected');
     }
     const children = [...keys].map((ch) => {
       const char = ch.toLocaleUpperCase();
@@ -234,11 +218,7 @@ export class Keyboard {
         text: char,
         className: cls.key,
       });
-      // set styles
-      const mixed = getColorMixCSS();
-      key.ref.style.backgroundColor = mixed;
-      key.ref.style.border = `2px solid ${mixed}`;
-
+      setStyles(key);
       this.#keysMap[char] = { key, hidden: false };
 
       return key;
@@ -267,8 +247,12 @@ export class Keyboard {
   }
 
   set disabled(v) {
-    this.allowPointerEvents(!Boolean(v));
+    this.allowPointerEvents(!v);
     this.#disabled = Boolean(v);
-    //this.#element.ref.style.opacity = v ? '0.5' : '';
+    // clear active if exists
+    if (v) {
+      this.#activeKey?.toggleClass(cls.keyActive, false);
+      this.#activeKey = null;
+    }
   }
 }
