@@ -233,9 +233,15 @@ summary {
           align-items: center;
   max-width: 800px;
   min-width: 375px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 8px;
+  padding-right: 8px;
   margin: 0 auto;
+}
+@media screen and (width > 620px) {
+  .wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 .keyboard {
@@ -250,13 +256,14 @@ summary {
           justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
   width: 100%;
-  padding: 25px 0;
+  padding: 40px 0;
   border-radius: 40px;
 }
 @media screen and (width > 400px) {
   .keyboard {
+    gap: 15px;
     padding: 40px 0;
   }
 }
@@ -359,8 +366,8 @@ summary {
 
 .btn-primary {
   padding: 6px;
-  font-size: 20px;
-  letter-spacing: 0.1rem;
+  font-size: 18px;
+  line-height: 1;
   text-transform: uppercase;
   color: rgb(255, 225, 253);
   color: white;
@@ -374,6 +381,12 @@ summary {
       -ms-user-select: none;
           user-select: none;
   opacity: 0.4;
+}
+@media screen and (width > 768px) {
+  .btn-primary {
+    font-size: 20px;
+    letter-spacing: 0.1rem;
+  }
 }
 
 .controls {
@@ -396,7 +409,15 @@ summary {
 .controls__repeat {
   width: 50%;
   min-width: 40px;
+  height: 70px;
   padding: 20px;
+}
+@media screen and (width > 768px) {
+  .controls__start,
+  .controls__repeat {
+    height: unset;
+    gap: 100px;
+  }
 }
 
 .controls__repeat {
@@ -410,7 +431,12 @@ summary {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 20px;
+  gap: 10px;
+}
+@media screen and (width > 400px) {
+  .stats {
+    gap: 20px;
+  }
 }
 
 .rounds-counter,
@@ -421,7 +447,7 @@ summary {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 8px;
+  gap: 5px;
   color: #444444;
 }
 
@@ -429,7 +455,7 @@ summary {
   -webkit-appearance: unset;
      -moz-appearance: unset;
           appearance: unset;
-  padding: 8px 20px;
+  padding: 8px 10px;
   margin: 0;
   color: #444444;
   text-transform: capitalize;
@@ -446,6 +472,11 @@ summary {
   -webkit-filter: grayscale(1);
           filter: grayscale(1);
 }
+@media screen and (width > 400px) {
+  .difficulty {
+    padding: 8px 20px;
+  }
+}
 
 .header {
   display: -webkit-box;
@@ -460,7 +491,7 @@ summary {
   gap: 5px;
   width: 100%;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .logo {
