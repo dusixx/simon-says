@@ -1,14 +1,5 @@
 import { Element } from './element.js';
-import {
-  isFunc,
-  isInt,
-  isIterable,
-  isStr,
-  rndInt,
-  getRandomColor,
-  sleep,
-  getColorMixCSS,
-} from './helpers.js';
+import { isFunc, isInt, isStr, sleep, getColorMixCSS } from './helpers.js';
 
 const MIN_HIGHLIGHT_TIO = 300;
 const DEF_KEYS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -31,10 +22,10 @@ const setStyles = ({ ref: { style } }) => {
 
 export class Keyboard {
   #element;
-  #activeKey;
   #disabled;
   #onClick = null;
-  #keysMap = {}; /* {char, key} */
+  #active = {}; /* {key, iniciator} */
+  #keysMap = {}; /* {char, {key, hidden}} */
 
   constructor({ keys = DEF_KEYS } = {}) {
     this.#element = new Element({ tag: 'ul', className: cls.keyboard });
@@ -42,8 +33,8 @@ export class Keyboard {
     this.#addInteractivity();
   }
 
-  #isActiveKey = (key) => {
-    return key === this.#activeKey;
+  #isActive = (key) => {
+    return key === this.#active?.key;
   };
 
   #isValidChar = (e) => {
@@ -54,24 +45,9 @@ export class Keyboard {
     return this.#keysMap[char].hidden;
   };
 
-  // TODO: this.#activeKey -> {key, iniciator: "keydown|mousedown"}
-  #wasActivatedByKeyboard = () => {
-    const { pointerEvents } = this.#element.ref.style;
-    return this.#activeKey && pointerEvents === 'none';
-  };
-
   #handleKeydown = (e) => {
-    if (this.#disabled) {
-      return;
-    }
-    // there is already an active key (avoid repeating same key)
-    if (this.#activeKey) {
-      // disable all keyboard side effects
+    if (this.#disabled || this.#active || !this.#isValidChar(e)) {
       e.preventDefault();
-      return;
-    }
-    // skip invalid chars
-    if (!this.#isValidChar(e)) {
       return;
     }
     const char = e.code.slice(-1);
@@ -82,7 +58,8 @@ export class Keyboard {
     if (!key) {
       return;
     }
-    this.#activeKey = key;
+    this.#active = { key, iniciator: 'keydown' };
+
     key.toggleClass(cls.keyActive);
     this.allowPointerEvents(false);
 
@@ -90,14 +67,8 @@ export class Keyboard {
   };
 
   #handleKeyup = (e) => {
-    if (this.#disabled) {
-      return;
-    }
-    // nothing to reset
-    if (!this.#activeKey) {
-      return;
-    }
-    if (!this.#isValidChar(e)) {
+    if (this.#disabled || !this.#active || !this.#isValidChar(e)) {
+      e.preventDefault();
       return;
     }
     const char = e.code.slice(-1);
@@ -105,10 +76,11 @@ export class Keyboard {
       return;
     }
     const key = this.findKeyByText(char);
-    if (!this.#isActiveKey(key)) {
+    if (!this.#isActive(key)) {
       return;
     }
-    this.#activeKey = null;
+    this.#active = null;
+
     key.toggleClass(cls.keyActive);
     this.allowPointerEvents(true);
   };
@@ -118,17 +90,17 @@ export class Keyboard {
       return;
     }
     const key = this.findKeyByRef(e.target);
-    this.#activeKey = key;
+    this.#active = { key, iniciator: 'mousedown' };
 
     this.#onClick?.(key.text, key);
   };
 
-  // active key should be cleared even if button was released outside the keyboard
+  // active key should be cleared even
+  // if button was released outside the keyboard
   #handleDocumentMouseup = (e) => {
-    if (this.#wasActivatedByKeyboard()) {
-      return;
+    if (this.#active?.iniciator === 'mousedown') {
+      this.#active = null;
     }
-    this.#activeKey = null;
   };
 
   #addInteractivity = () => {
@@ -150,22 +122,20 @@ export class Keyboard {
     if (!key) {
       return;
     }
-    this.#activeKey = key;
+    this.#active = { key };
 
     key.toggleClass(cls.keyActive);
     await sleep(timeout);
     key.toggleClass(cls.keyActive);
 
-    this.#activeKey = null;
+    this.#active = null;
   };
 
   async highlight({ sequence: seq, duration, delay } = {}) {
     if (!isStr(seq) || !seq) {
       return;
     }
-    if (!isInt(delay) || delay < 0) {
-      delay = 0;
-    }
+    delay = !isInt(delay) || delay < 0 ? 0 : delay;
     this.disabled = true;
 
     for (let i = 0; i < seq.length; i += 1) {
@@ -183,14 +153,10 @@ export class Keyboard {
       return;
     }
     Object.entries(this.#keysMap).forEach(([char, keyData]) => {
-      // show
-      if (regex.test(char)) {
-        keyData.key.ref.style.display = '';
-        keyData.hidden = false;
-      } else {
-        keyData.key.ref.style.display = 'none';
-        keyData.hidden = true;
-      }
+      const willBeShown = regex.test(char);
+
+      keyData.key.ref.style.display = willBeShown ? '' : 'none';
+      keyData.hidden = !willBeShown;
     });
   }
 
@@ -212,7 +178,6 @@ export class Keyboard {
     }
     const children = [...keys].map((ch) => {
       const char = ch.toLocaleUpperCase();
-
       const key = new Element({
         tag: 'li',
         text: char,
@@ -224,6 +189,20 @@ export class Keyboard {
       return key;
     });
     this.#element.append(...children);
+  }
+
+  get disabled() {
+    return this.#disabled;
+  }
+
+  set disabled(v) {
+    this.allowPointerEvents(!v);
+    this.#disabled = Boolean(v);
+    // clear active if exists
+    if (v) {
+      this.#active?.key?.toggleClass(cls.keyActive, false);
+      this.#active = null;
+    }
   }
 
   get keys() {
@@ -240,19 +219,5 @@ export class Keyboard {
 
   set onClick(handler) {
     this.#onClick = isFunc(handler) ? handler : null;
-  }
-
-  get disabled() {
-    return this.#disabled;
-  }
-
-  set disabled(v) {
-    this.allowPointerEvents(!v);
-    this.#disabled = Boolean(v);
-    // clear active if exists
-    if (v) {
-      this.#activeKey?.toggleClass(cls.keyActive, false);
-      this.#activeKey = null;
-    }
   }
 }
