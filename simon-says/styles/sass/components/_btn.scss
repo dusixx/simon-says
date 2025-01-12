@@ -5,8 +5,9 @@
 
   font-family: inherit;
   border-style: none;
-  cursor: pointer;
+
   user-select: none;
+  cursor: pointer;
 }
 
 .btn-primary {
@@ -16,6 +17,7 @@
 
   font-size: 18px;
   line-height: 1;
+  letter-spacing: 0.06rem;
   text-transform: uppercase;
 
   color: rgb(255, 225, 253);
@@ -27,10 +29,5 @@
     @include non-interactive {
       opacity: 0.4;
     }
-  }
-
-  @media screen and (width > 768px) {
-    font-size: 20px;
-    letter-spacing: 0.1rem;
   }
 }

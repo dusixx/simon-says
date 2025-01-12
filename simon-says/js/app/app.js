@@ -1,5 +1,11 @@
-import { sleep, rndInt } from '../utils/index.js';
 import * as refs from './refs.js';
+
+import {
+  sleep,
+  rndInt,
+  updateKeyboard,
+  generateSequence,
+} from '../utils/index.js';
 
 const {
   difficulty,
@@ -27,31 +33,6 @@ let startBtnMode = 'start'; // start|newgame
 // Helpers
 //
 
-const updateKeyboard = (v) => {
-  const diffLevel = {
-    easy: /[0-9]/,
-    medium: /[a-z]/i,
-    hard: /.*/,
-  };
-  const pattern = diffLevel[v.toLowerCase()];
-  if (pattern) {
-    keyboard.showKeys(pattern);
-  }
-};
-
-export const generateSequence = ({ round = 1, difficulty = 'easy' } = {}) => {
-  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const range = {
-    easy: [0, 9],
-    medium: [10, chars.length - 1],
-    hard: [0, chars.length - 1],
-  };
-  return Array.from(
-    { length: round * 2 },
-    (v) => chars[rndInt(...range[difficulty.toLowerCase()])]
-  ).join('');
-};
-
 const init = () => {
   attemptsLeft = 1;
 
@@ -65,7 +46,7 @@ const init = () => {
   userInput.visibile = false;
 
   keyboard.disabled = true;
-  updateKeyboard(difficulty.value);
+  updateKeyboard(keyboard, difficulty.value);
 };
 
 const startNewRound = async () => {
@@ -116,7 +97,7 @@ init();
 //
 
 difficulty.onChange = (value) => {
-  updateKeyboard(value);
+  updateKeyboard(keyboard, value);
 };
 
 btnStart.onClick = async () => {

@@ -3,12 +3,13 @@ import {
   isFunc,
   isInt,
   isStr,
+  isRegex,
   sleep,
   getColorMixCSS,
+  DEF_KEY_CHARS,
 } from '../utils/index.js';
 
 const MIN_HIGHLIGHT_TIO = 300;
-const DEF_KEYS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const cls = {
   key: 'key',
@@ -33,10 +34,14 @@ export class Keyboard {
   #active = {}; /* {key, iniciator} */
   #keysMap = {}; /* {char, {key, hidden}} */
 
-  constructor({ keys = DEF_KEYS } = {}) {
+  constructor({ keys = DEF_KEY_CHARS } = {}) {
     this.#element = new Element({ tag: 'ul', className: cls.keyboard });
     this.appendKeys(keys);
     this.#addInteractivity();
+  }
+
+  get [Symbol.toStringTag]() {
+    return 'Keyboard';
   }
 
   #isActive = (key) => {
@@ -159,7 +164,7 @@ export class Keyboard {
   }
 
   showKeys(regex) {
-    if (!(regex instanceof RegExp)) {
+    if (!isRegex(regex)) {
       return;
     }
     Object.entries(this.#keysMap).forEach(([char, keyData]) => {
@@ -217,7 +222,6 @@ export class Keyboard {
   set disabled(v) {
     this.allowPointerEvents(!v);
     this.#disabled = Boolean(v);
-    // clear active if exists
     if (v) {
       this.clearActive();
     }

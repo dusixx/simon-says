@@ -357,17 +357,18 @@ summary {
           align-items: center;
   font-family: inherit;
   border-style: none;
-  cursor: pointer;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  cursor: pointer;
 }
 
 .btn-primary {
   padding: 6px;
   font-size: 18px;
   line-height: 1;
+  letter-spacing: 0.06rem;
   text-transform: uppercase;
   color: rgb(255, 225, 253);
   color: white;
@@ -381,12 +382,6 @@ summary {
       -ms-user-select: none;
           user-select: none;
   opacity: 0.4;
-}
-@media screen and (width > 768px) {
-  .btn-primary {
-    font-size: 20px;
-    letter-spacing: 0.1rem;
-  }
 }
 
 .controls {
