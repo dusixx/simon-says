@@ -68,15 +68,8 @@ export class TextInput {
 
   set visibile(v) {
     const { style } = this.#element.ref;
-    if (v) {
-      style.visibility = 'visible';
-      style.pointerEvents = '';
-      style.opacity = '';
-    } else {
-      style.visibility = 'hidden';
-      style.pointerEvents = 'none';
-      style.opacity = '0';
-    }
+    style.visibility = v ? 'visible' : 'hidden';
+    style.pointerEvents = v ? '' : 'none';
   }
 
   get value() {
