@@ -1,5 +1,7 @@
 export const DEF_KEY_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+export const DEF_DIFFICULTY_VALUES = ['easy', 'medium', 'hard'];
+
 export const difficultyLevel = {
   easy: {
     pattern: /[0-9]/,

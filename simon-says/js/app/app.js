@@ -1,13 +1,8 @@
 import * as refs from './refs.js';
-
-import {
-  sleep,
-  rndInt,
-  updateKeyboard,
-  generateSequence,
-} from '../utils/index.js';
+import { updateKeyboard, generateSequence, sleep } from '../utils/index.js';
 
 const {
+  main,
   difficulty,
   keyboard,
   userInput,
@@ -30,7 +25,9 @@ let repeatBtnMode = 'repeat'; // repeat|next
 let startBtnMode = 'start'; // start|newgame
 
 //
-// Helpers
+//------------------
+// Helpers/handlers
+//------------------
 //
 
 const init = () => {
@@ -90,10 +87,59 @@ const showSequence = async ({ repeat = false, delayBefore = 700 } = {}) => {
   btnRepeat.disabled = !attemptsLeft;
 };
 
-init();
+const handleWrongSequenceInput = () => {
+  if (!attemptsLeft) {
+    userInput.error('You lost!🥴');
+  } else {
+    userInput.error('Wrong, try again!😟');
+  }
+  keyboard.disabled = true;
+};
+
+const handleRightSequenceInput = () => {
+  if (roundsCounter.value === roundsCounter.max) {
+    userInput.success('You won!🥳');
+    btnRepeat.disabled = true;
+  } else {
+    userInput.success('Right, click Next!😎');
+
+    btnRepeat.text = caption.NEXT;
+    repeatBtnMode = 'next';
+    btnRepeat.disabled = false;
+  }
+  keyboard.disabled = true;
+};
+
+const handleRepeatClick = async () => {
+  userInput.clear();
+  await showSequence({ repeat: true });
+  btnRepeat.disabled = true;
+  attemptsLeft -= 1;
+};
+
+const handleNextClick = async () => {
+  btnRepeat.text = caption.REPEAT;
+  repeatBtnMode = 'repeat';
+  roundsCounter.value += 1;
+  await startNewRound();
+};
+
+const handleStartClick = async () => {
+  btnStart.text = caption.NEW_GAME;
+  startBtnMode = 'newgame';
+  await startNewRound();
+};
+
+const handleNewGameClick = () => {
+  btnStart.text = caption.START;
+  startBtnMode = 'start';
+  init();
+};
 
 //
+//------------------
 // Listeners
+//------------------
 //
 
 difficulty.onChange = (value) => {
@@ -102,30 +148,17 @@ difficulty.onChange = (value) => {
 
 btnStart.onClick = async () => {
   if (startBtnMode === 'start') {
-    btnStart.text = caption.NEW_GAME;
-    startBtnMode = 'newgame';
-    await startNewRound();
+    await handleStartClick();
   } else {
-    btnStart.text = caption.START;
-    startBtnMode = 'start';
-    init();
+    handleNewGameClick();
   }
 };
 
 btnRepeat.onClick = async () => {
   if (repeatBtnMode === 'repeat') {
-    userInput.clear();
-
-    await showSequence({ repeat: true });
-
-    btnRepeat.disabled = true;
-    attemptsLeft -= 1;
+    await handleRepeatClick();
   } else {
-    btnRepeat.text = caption.REPEAT;
-    repeatBtnMode = 'repeat';
-
-    roundsCounter.value += 1;
-    startNewRound();
+    await handleNextClick();
   }
 };
 
@@ -133,28 +166,12 @@ keyboard.onClick = (char) => {
   userInput.value += char;
   const len = userInput.value.length;
 
-  // right
   if (userInput.value === sequence) {
-    if (roundsCounter.value === roundsCounter.max) {
-      userInput.success('You won!🥳');
-      btnRepeat.disabled = true;
-    } else {
-      userInput.success('Right, click Next!😎');
-
-      btnRepeat.text = caption.NEXT;
-      repeatBtnMode = 'next';
-      btnRepeat.disabled = false;
-    }
-    keyboard.disabled = true;
-    return;
-  }
-  // wrong
-  if (userInput.value !== sequence.slice(0, len)) {
-    if (!attemptsLeft) {
-      userInput.error('You lost!🥴');
-    } else {
-      userInput.error('Wrong, try again!😟');
-    }
-    keyboard.disabled = true;
+    handleRightSequenceInput();
+  } else if (userInput.value !== sequence.slice(0, len)) {
+    handleWrongSequenceInput();
   }
 };
+
+document.body.append(main.ref);
+init();

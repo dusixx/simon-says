@@ -24,7 +24,9 @@ const setStyles = ({ ref: { style } }) => {
 };
 
 //
+//------------------
 // Keyboard
+//------------------
 //
 
 export class Keyboard {
@@ -101,7 +103,7 @@ export class Keyboard {
   };
 
   #handleMousedown = (e) => {
-    if (!e.target.classList.contains(cls.key)) {
+    if (this.#active) {
       return;
     }
     const key = this.findKeyByRef(e.target);
@@ -151,6 +153,7 @@ export class Keyboard {
       return;
     }
     delay = !isInt(delay) || delay < 0 ? 0 : delay;
+
     this.disabled = true;
 
     for (let i = 0; i < seq.length; i += 1) {

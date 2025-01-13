@@ -65,5 +65,4 @@ const wrapper = new Element(
   controls
 );
 
-const main = new Element({ tag: 'main' }, wrapper);
-document.body.append(main.ref);
+export const main = new Element({ tag: 'main' }, wrapper);

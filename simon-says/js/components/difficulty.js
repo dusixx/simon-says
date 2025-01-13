@@ -1,12 +1,10 @@
-import { Element, isFunc } from '../utils/index.js';
-
-const DEF_VALUES = ['easy', 'medium', 'hard'];
+import { Element, isFunc, DEF_DIFFICULTY_VALUES } from '../utils/index.js';
 
 export class Difficulty {
   #element;
   #onChange;
 
-  constructor(values = DEF_VALUES) {
+  constructor(values = DEF_DIFFICULTY_VALUES) {
     if (!Array.isArray(values)) {
       throw TypeError('"values" array expected');
     }
