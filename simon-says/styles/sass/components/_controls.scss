@@ -1,24 +1,18 @@
 .controls {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: smooth-out(375px, 30px, 739px, 100px);
   width: 100%;
-
-  @media screen and (width > 768px) {
-    gap: 100px;
-  }
 }
 
 .controls__start,
 .controls__repeat {
   width: 50%;
+  min-height: 76px;
   min-width: 40px;
-  height: 70px;
-  padding: 20px;
 
-  @media screen and (width > 538px) {
-    height: unset;
-    gap: 100px;
+  @media screen and (width > 620px) {
+    min-height: 60px;
   }
 }
 

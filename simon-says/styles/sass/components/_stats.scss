@@ -1,11 +1,7 @@
 .stats {
   display: flex;
   align-items: center;
-  gap: 10px;
-
-  @media screen and (width > 400px) {
-    gap: 20px;
-  }
+  gap: smooth-out(375px, 10px, 739px, 20px);
 }
 
 .rounds-counter,
@@ -19,7 +15,7 @@
 .difficulty {
   appearance: unset;
 
-  padding: 8px 10px;
+  padding: 8px smooth-out(375px, 10px, 739px, 20px);
   margin: 0;
 
   color: #444444;
@@ -34,9 +30,5 @@
     @include non-interactive {
       filter: grayscale(1);
     }
-  }
-
-  @media screen and (width > 400px) {
-    padding: 8px 20px;
   }
 }

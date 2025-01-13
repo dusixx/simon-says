@@ -1,0 +1,21 @@
+@use 'sass:math';
+
+@function strip-units($val) {
+  @return math.div($val, ($val * 0 + 1));
+}
+
+@function smooth-out($min-width, $min-value, $max-width, $max-value) {
+  $min-width-num: strip-units($min-width);
+  $min-value-num: strip-units($min-value);
+  $max-width-num: strip-units($max-width);
+  $max-value-num: strip-units($max-value);
+
+  @return clamp(
+    $min-value,
+    calc(
+      $min-value + ($max-value-num - $min-value-num) *
+        ((100vw - $min-width) / ($max-width-num - $min-width-num))
+    ),
+    $max-value
+  );
+}

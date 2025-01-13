@@ -36,6 +36,14 @@ body {
           user-select: none;
 }
 
+body::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 10px;
+  background-color: rgb(227, 250, 233);
+}
+
 /*! modern-normalize v3.0.1 | MIT License | https://github.com/sindresorhus/modern-normalize */
 /*
 Document
@@ -233,15 +241,8 @@ summary {
           align-items: center;
   max-width: 739px;
   min-width: 375px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 0 clamp(8px, 8px + 12 * (100vw - 375px) / 364, 20px);
   margin: 0 auto;
-}
-@media screen and (width > 620px) {
-  .wrapper {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
 }
 
 .keyboard {
@@ -256,16 +257,10 @@ summary {
           justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
   padding: 40px 0;
   border-radius: 40px;
-}
-@media screen and (width > 400px) {
-  .keyboard {
-    gap: 15px;
-    padding: 40px 0;
-  }
 }
 
 .key {
@@ -391,27 +386,20 @@ summary {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  gap: 30px;
+  gap: clamp(30px, 30px + 70 * (100vw - 375px) / 364, 100px);
   width: 100%;
-}
-@media screen and (width > 768px) {
-  .controls {
-    gap: 100px;
-  }
 }
 
 .controls__start,
 .controls__repeat {
   width: 50%;
+  min-height: 76px;
   min-width: 40px;
-  height: 70px;
-  padding: 20px;
 }
-@media screen and (width > 538px) {
+@media screen and (width > 620px) {
   .controls__start,
   .controls__repeat {
-    height: unset;
-    gap: 100px;
+    min-height: 60px;
   }
 }
 
@@ -426,12 +414,7 @@ summary {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 10px;
-}
-@media screen and (width > 400px) {
-  .stats {
-    gap: 20px;
-  }
+  gap: clamp(10px, 10px + 10 * (100vw - 375px) / 364, 20px);
 }
 
 .rounds-counter,
@@ -450,7 +433,7 @@ summary {
   -webkit-appearance: unset;
      -moz-appearance: unset;
           appearance: unset;
-  padding: 8px 10px;
+  padding: 8px clamp(10px, 10px + 10 * (100vw - 375px) / 364, 20px);
   margin: 0;
   color: #444444;
   text-transform: capitalize;
@@ -466,11 +449,6 @@ summary {
           user-select: none;
   -webkit-filter: grayscale(1);
           filter: grayscale(1);
-}
-@media screen and (width > 400px) {
-  .difficulty {
-    padding: 8px 20px;
-  }
 }
 
 .header {
