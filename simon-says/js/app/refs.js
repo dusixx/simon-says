@@ -5,14 +5,14 @@ import {
   Difficulty,
   RoundsCounter,
   Button,
-  TextInput,
+  UserInput,
 } from '../components/index.js';
 
 export const keyboard = new Keyboard();
 export const difficulty = new Difficulty();
 export const roundsCounter = new RoundsCounter();
 
-export const userInput = new TextInput({
+export const userInput = new UserInput({
   tabIndex: -1,
   readonly: '',
   placeholder: 'Your sequence',

@@ -12,9 +12,8 @@ const ERROR_CSS = `
   border-color: rgb(241 203 222);
 `;
 
-export class TextInput {
+export class UserInput {
   #element;
-  #onInput;
 
   constructor({ className = '', ...rest } = {}) {
     this.#element = new Element({
@@ -46,15 +45,6 @@ export class TextInput {
     const { style } = this.#element.ref;
     this.value = msg;
     style.cssText = ERROR_CSS;
-  }
-
-  set onInput(handler) {
-    this.#onInput = isFunc(handler) ? (e) => handler(e.target.value, e) : null;
-    if (this.#onInput) {
-      this.#element.addListener('input', this.#onInput);
-    } else {
-      this.#element.removeListener('input', this.#onInput);
-    }
   }
 
   hide() {
