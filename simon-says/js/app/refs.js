@@ -48,7 +48,7 @@ const logo = new Element(
   },
   ...[...'🦜SimonSays'].map((text) => {
     const el = new Element({ tag: 'span', text });
-    const mixed = getColorMixCSS({ perecent: 50, baseColor: '#ff43f7' });
+    const mixed = getColorMixCSS({ baseColor: '#ff43f7' });
     el.ref.style.color = mixed;
 
     return el;
