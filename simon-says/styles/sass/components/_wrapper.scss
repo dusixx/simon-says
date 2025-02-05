@@ -1,12 +1,16 @@
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
   max-width: 739px;
   min-width: 375px;
 
   padding: 0 smooth-out(375px, 8px, 739px, 20px);
   margin: 0 auto;
+}
+
+.main__wrapper {
+  @extend .wrapper;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

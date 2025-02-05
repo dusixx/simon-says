@@ -1,4 +1,5 @@
-import { isInt, Element } from '../utils/index.js';
+import { isInt } from '../utils/index.js';
+import { Element } from './element.js';
 
 export class RoundsCounter {
   #element;
@@ -38,7 +39,7 @@ export class RoundsCounter {
     this.#element.ref.style.display = '';
   }
 
-  set visibile(v) {
+  set visible(v) {
     const { style } = this.#element.ref;
     style.visibility = v ? 'visible' : 'hidden';
     style.pointerEvents = v ? '' : 'none';

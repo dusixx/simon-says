@@ -1,5 +1,5 @@
-import { Element, getColorMixCSS } from '../utils/index.js';
-
+import { getColorMixCSS } from '../utils/index.js';
+import { Element } from '../components/element.js';
 import {
   Keyboard,
   Difficulty,
@@ -55,14 +55,17 @@ const logo = new Element(
   })
 );
 
-const header = new Element({ tag: 'header', className: 'header' }, logo, stats);
-
-const wrapper = new Element(
-  { className: 'wrapper' },
-  header,
-  userInput.underlyingElement,
-  keyboard.underlyingElement,
-  controls
+export const header = new Element(
+  { tag: 'header', className: 'header' },
+  new Element({ className: 'header__wrapper' }, logo, stats)
 );
 
-export const main = new Element({ tag: 'main' }, wrapper);
+export const main = new Element(
+  { tag: 'main' },
+  new Element(
+    { className: 'main__wrapper' },
+    userInput.underlyingElement,
+    keyboard.underlyingElement,
+    controls
+  )
+);

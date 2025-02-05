@@ -1,4 +1,5 @@
-import { Element, isFunc } from '../utils/index.js';
+import { isFunc } from '../utils/index.js';
+import { Element } from './element.js';
 
 const SUCCESS_CSS = `
   color: rgb(136 183 99);
@@ -54,7 +55,7 @@ export class UserInput {
     this.#element.ref.style.display = '';
   }
 
-  set visibile(v) {
+  set visible(v) {
     const { style } = this.#element.ref;
     style.visibility = v ? 'visible' : 'hidden';
     style.pointerEvents = v ? '' : 'none';

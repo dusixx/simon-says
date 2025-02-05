@@ -1,5 +1,5 @@
+import { Element } from './element.js';
 import {
-  Element,
   isFunc,
   isInt,
   isStr,
@@ -33,7 +33,7 @@ export class Keyboard {
   #element;
   #disabled;
   #onClick = null;
-  #active = {}; /* {key, iniciator} */
+  #active = {}; /* {key, initiator} */
   #keysMap = {}; /* {char, {key, hidden}} */
 
   constructor({ keys = DEF_KEY_CHARS } = {}) {
@@ -76,7 +76,7 @@ export class Keyboard {
     if (!key) {
       return;
     }
-    this.#active = { key, iniciator: 'keydown' };
+    this.#active = { key, initiator: 'keydown' };
 
     key.toggleClass(cls.keyActive);
     this.allowPointerEvents(false);
@@ -107,7 +107,7 @@ export class Keyboard {
       return;
     }
     const key = this.findKeyByRef(e.target);
-    this.#active = { key, iniciator: 'mousedown' };
+    this.#active = { key, initiator: 'mousedown' };
 
     this.#onClick?.(key.text, key);
   };
@@ -115,7 +115,7 @@ export class Keyboard {
   // active key should be cleared even
   // if button was released outside the keyboard
   #handleDocumentMouseup = (e) => {
-    if (this.#active?.iniciator === 'mousedown') {
+    if (this.#active?.initiator === 'mousedown') {
       this.#active = null;
     }
   };

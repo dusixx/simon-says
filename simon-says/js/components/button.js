@@ -1,4 +1,5 @@
-import { Element, isFunc } from '../utils/index.js';
+import { isFunc } from '../utils/index.js';
+import { Element } from './element.js';
 
 export class Button {
   #element;
@@ -12,15 +13,15 @@ export class Button {
       text,
       ...rest,
     });
+    this.#addInteractivity();
   }
+
+  #addInteractivity = () => {
+    this.#element.addListener('click', (e) => this.#onClick?.(e));
+  };
 
   set onClick(handler) {
     this.#onClick = isFunc(handler) ? handler : null;
-    if (this.#onClick) {
-      this.#element.addListener('click', this.#onClick);
-    } else {
-      this.#element.removeListener('click', this.#onClick);
-    }
   }
 
   hide() {

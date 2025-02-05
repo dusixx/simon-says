@@ -1,4 +1,5 @@
-import { Element, isFunc, DEF_DIFFICULTY_VALUES } from '../utils/index.js';
+import { isFunc, DEF_DIFFICULTY_VALUES } from '../utils/index.js';
+import { Element } from './element.js';
 
 export class Difficulty {
   #element;
@@ -8,13 +9,13 @@ export class Difficulty {
     if (!Array.isArray(values)) {
       throw TypeError('"values" array expected');
     }
-    const el = new Element(
+    this.#element = new Element(
       { tag: 'select', className: 'difficulty' },
       ...values.map(
         (value) => new Element({ tag: 'option', value, text: value })
       )
     );
-    this.#element = el;
+    this.#addInteractivity();
   }
 
   hide() {
@@ -25,13 +26,14 @@ export class Difficulty {
     this.#element.ref.style.display = '';
   }
 
+  #addInteractivity = () => {
+    this.#element.addListener('change', (e) =>
+      this.#onChange?.(e.target.value, e)
+    );
+  };
+
   set onChange(handler) {
-    this.#onChange = isFunc(handler) ? (e) => handler(e.target.value, e) : null;
-    if (this.#onChange) {
-      this.#element.addListener('change', this.#onChange);
-    } else {
-      this.#element.removeListener('change', this.#onChange);
-    }
+    this.#onChange = isFunc(handler) ? handler : null;
   }
 
   get ref() {

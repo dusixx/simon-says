@@ -225,7 +225,14 @@ summary {
   display: list-item;
 }
 
-.wrapper {
+.wrapper, .header__wrapper, .main__wrapper {
+  max-width: 739px;
+  min-width: 375px;
+  padding: 0 clamp(8px, 8px + 12 * (100vw - 375px) / 364, 20px);
+  margin: 0 auto;
+}
+
+.main__wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -239,10 +246,6 @@ summary {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  max-width: 739px;
-  min-width: 375px;
-  padding: 0 clamp(8px, 8px + 12 * (100vw - 375px) / 364, 20px);
-  margin: 0 auto;
 }
 
 .keyboard {
@@ -299,7 +302,7 @@ summary {
 .user-input {
   width: 100%;
   padding: 8px;
-  font-size: 18px;
+  font-size: 24px;
   letter-spacing: 0.05rem;
   line-height: 1;
   text-align: center;
@@ -452,19 +455,20 @@ summary {
 }
 
 .header {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+.header__wrapper {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  gap: 5px;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 15px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .logo {

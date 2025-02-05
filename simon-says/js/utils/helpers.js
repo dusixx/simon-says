@@ -1,4 +1,4 @@
-import { difficultyLevel, DEF_KEY_CHARS } from './data.js';
+import { difficultyLevel, DEF_KEY_CHARS } from '../../data/data.js';
 
 const toStr = Object.prototype.toString;
 
