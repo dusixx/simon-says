@@ -24,9 +24,7 @@ const setStyles = ({ ref: { style } }) => {
 };
 
 //
-//------------------
 // Keyboard
-//------------------
 //
 
 export class Keyboard {
@@ -244,5 +242,9 @@ export class Keyboard {
 
   set onClick(handler) {
     this.#onClick = isFunc(handler) ? handler : null;
+  }
+
+  get onClick() {
+    return this.#onClick;
   }
 }

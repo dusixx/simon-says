@@ -1,4 +1,3 @@
-import { isFunc } from '../utils/index.js';
 import { Element } from './element.js';
 
 const SUCCESS_CSS = `
@@ -59,6 +58,11 @@ export class UserInput {
     const { style } = this.#element.ref;
     style.visibility = v ? 'visible' : 'hidden';
     style.pointerEvents = v ? '' : 'none';
+  }
+
+  get visible() {
+    const { style } = this.#element.ref;
+    return style.visibility === 'visible';
   }
 
   get value() {

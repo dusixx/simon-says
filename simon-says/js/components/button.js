@@ -3,6 +3,7 @@ import { Element } from './element.js';
 
 export class Button {
   #element;
+
   #onClick;
 
   constructor({ text = '', className = '', ...rest } = {}) {
@@ -22,6 +23,10 @@ export class Button {
 
   set onClick(handler) {
     this.#onClick = isFunc(handler) ? handler : null;
+  }
+
+  get onClick() {
+    return this.#onClick;
   }
 
   hide() {

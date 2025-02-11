@@ -45,6 +45,11 @@ export class RoundsCounter {
     style.pointerEvents = v ? '' : 'none';
   }
 
+  get visible() {
+    const { style } = this.#element.ref;
+    return style.visibility === 'visible';
+  }
+
   get value() {
     return this.#value;
   }

@@ -1,15 +1,8 @@
 import * as refs from './refs.js';
 import { updateKeyboard, generateSequence, sleep } from '../utils/index.js';
 
-const {
-  difficulty,
-  keyboard,
-  userInput,
-  btnStart,
-  btnRepeat,
-  controls,
-  roundsCounter,
-} = refs;
+const { difficulty, keyboard, userInput, btnStart, btnRepeat, roundsCounter } =
+  refs;
 
 const caption = {
   REPEAT: btnRepeat.text,
@@ -24,9 +17,7 @@ let repeatBtnMode = 'repeat'; // repeat|next
 let startBtnMode = 'start'; // start|newgame
 
 //
-//------------------
 // Helpers/handlers
-//------------------
 //
 
 export const init = () => {
@@ -134,9 +125,7 @@ const handleNewGameClick = () => {
 };
 
 //
-//------------------
 // Listeners
-//------------------
 //
 
 difficulty.onChange = (value) => {
