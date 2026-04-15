@@ -1,13 +1,13 @@
-import { Element } from './element.js';
 import {
+  DEF_KEY_CHARS,
+  getColorMixCSS,
   isFunc,
   isInt,
-  isStr,
   isRegex,
+  isStr,
   sleep,
-  getColorMixCSS,
-  DEF_KEY_CHARS,
 } from '../utils/index.js';
+import { Element } from './element.js';
 
 const MIN_HIGHLIGHT_TIO = 300;
 
@@ -112,7 +112,7 @@ export class Keyboard {
 
   // active key should be cleared even
   // if button was released outside the keyboard
-  #handleDocumentMouseup = (e) => {
+  #handleDocumentMouseup = (_) => {
     if (this.#active?.initiator === 'mousedown') {
       this.#active = null;
     }

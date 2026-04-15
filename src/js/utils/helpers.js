@@ -1,4 +1,4 @@
-import { difficultyLevel, DEF_KEY_CHARS } from '../../data/data.js';
+import { DEF_KEY_CHARS, difficultyLevel } from '../../data/data.js';
 
 const toStr = Object.prototype.toString;
 
@@ -17,7 +17,7 @@ export const updateKeyboard = (keyboard, difficulty) => {
 };
 
 export const generateSequence = ({ round = 1, difficulty = 'easy' } = {}) => {
-  return Array.from({ length: round * 2 }, (v) => {
+  return Array.from({ length: round * 2 }, (_) => {
     const { range } = difficultyLevel[difficulty.toLowerCase()];
     return DEF_KEY_CHARS[rndInt(...range)];
   }).join('');
@@ -32,7 +32,7 @@ export const rndInt = (min, max) => {
 };
 
 export const getRandomColor = ({ min = 0, max = 255 } = {}) => {
-  const rgb = [0, 0, 0].map((v) => rndInt(min, max));
+  const rgb = [0, 0, 0].map((_) => rndInt(min, max));
   const hex = rgb.map((v) => v.toString(16).padStart(2, 0));
 
   return {
