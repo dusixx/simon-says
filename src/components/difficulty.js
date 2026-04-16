@@ -1,5 +1,6 @@
-import { isFunc, DEF_DIFFICULTY_VALUES } from '../utils/index.js';
-import { Element } from './element.js';
+import { DEF_DIFFICULTY_VALUES } from '../common/constants.js';
+import { isFunc } from '../common/utils.js';
+import { Element } from './base/element.js';
 
 export class Difficulty {
   #element;

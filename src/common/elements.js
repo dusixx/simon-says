@@ -1,18 +1,18 @@
-import { getColorMixCSS } from '../utils/index.js';
-import { Element } from '../components/element.js';
+import { Element } from '../components/base/element.js';
 import {
-  Keyboard,
-  Difficulty,
-  RoundsCounter,
   Button,
-  UserInput,
+  Difficulty,
+  Keyboard,
+  RoundsCounter,
+  StatusBox,
 } from '../components/index.js';
+import { getColorMixCSS } from './utils.js';
 
 export const keyboard = new Keyboard();
 export const difficulty = new Difficulty();
 export const roundsCounter = new RoundsCounter();
 
-export const userInput = new UserInput({
+export const statusBox = new StatusBox({
   tabIndex: -1,
   readonly: '',
   placeholder: 'Your sequence',
@@ -42,10 +42,7 @@ const stats = new Element(
 );
 
 const logo = new Element(
-  {
-    tag: 'div',
-    className: 'logo',
-  },
+  { className: 'logo' },
   ...[...'🦜SimonSays'].map((text) => {
     const el = new Element({ tag: 'span', text });
     const mixed = getColorMixCSS({ baseColor: '#ff43f7' });
@@ -64,7 +61,7 @@ export const main = new Element(
   { tag: 'main' },
   new Element(
     { className: 'main__wrapper' },
-    userInput.underlyingElement,
+    statusBox.underlyingElement,
     keyboard.underlyingElement,
     controls
   )

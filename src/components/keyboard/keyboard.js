@@ -1,31 +1,10 @@
 import {
   DEF_KEY_CHARS,
-  getColorMixCSS,
-  isFunc,
-  isInt,
-  isRegex,
-  isStr,
-  sleep,
-} from '../utils/index.js';
-import { Element } from './element.js';
-
-const MIN_HIGHLIGHT_TIO = 300;
-
-const cls = {
-  key: 'key',
-  keyActive: 'key--active',
-  keyboard: 'keyboard',
-};
-
-const setStyles = ({ ref: { style } }) => {
-  const mixed = getColorMixCSS();
-  style.backgroundColor = mixed;
-  style.border = `2px solid ${mixed}`;
-};
-
-//
-// Keyboard
-//
+  KEY_HIGHLIGHT_MIN_TIMEOUT,
+} from '../../common/constants.js';
+import { isFunc, isInt, isRegex, isStr, sleep } from '../../common/utils.js';
+import { Element } from '../base/element.js';
+import { cls, setStyles } from './keyboard.utils.js';
 
 export class Keyboard {
   #element;
@@ -110,8 +89,7 @@ export class Keyboard {
     this.#onClick?.(key.text, key);
   };
 
-  // active key should be cleared even
-  // if button was released outside the keyboard
+  // active key should be cleared even if button was released outside the keyboard
   #handleDocumentMouseup = (_) => {
     if (this.#active?.initiator === 'mousedown') {
       this.#active = null;
@@ -130,8 +108,8 @@ export class Keyboard {
   }
 
   #highlightKeyByChar = async (ch, timeout) => {
-    if (!isInt(timeout) || timeout < MIN_HIGHLIGHT_TIO) {
-      timeout = MIN_HIGHLIGHT_TIO;
+    if (!isInt(timeout) || timeout < KEY_HIGHLIGHT_MIN_TIMEOUT) {
+      timeout = KEY_HIGHLIGHT_MIN_TIMEOUT;
     }
     const key = this.findKeyByText(ch);
     if (!key) {

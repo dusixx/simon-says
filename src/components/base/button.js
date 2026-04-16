@@ -1,9 +1,8 @@
-import { isFunc } from '../utils/index.js';
+import { isFunc } from '../../common/utils.js';
 import { Element } from './element.js';
 
 export class Button {
   #element;
-
   #onClick;
 
   constructor({ text = '', className = '', ...rest } = {}) {

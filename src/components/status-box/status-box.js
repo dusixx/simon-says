@@ -1,18 +1,7 @@
-import { Element } from './element.js';
+import { Element } from '../base/element.js';
+import { ERROR_CSS, SUCCESS_CSS } from './status-box.constants.js';
 
-const SUCCESS_CSS = `
-  color: rgb(136 183 99);
-  background-color: rgb(230 243 220);
-  border-color: rgb(197 219 180);
-`;
-
-const ERROR_CSS = `
-  color: rgb(233 127 180);
-  background-color: rgb(255 235 254);
-  border-color: rgb(241 203 222);
-`;
-
-export class UserInput {
+export class StatusBox {
   #element;
 
   constructor({ className = '', ...rest } = {}) {
