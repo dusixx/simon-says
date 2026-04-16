@@ -1,9 +1,9 @@
 import { getColorMixCSS } from '../../common/utils.js';
 
-export const cls = {
-  key: 'key',
-  keyActive: 'key--active',
-  keyboard: 'keyboard',
+export const ClassName = {
+  Key: 'key',
+  KeyActive: 'key--active',
+  Keyboard: 'keyboard',
 };
 
 export const setStyles = ({ ref: { style } }) => {

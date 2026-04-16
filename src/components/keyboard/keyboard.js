@@ -1,10 +1,10 @@
 import {
-  DEF_KEY_CHARS,
+  KEY_CHARS,
   KEY_HIGHLIGHT_MIN_TIMEOUT,
 } from '../../common/constants.js';
 import { isFunc, isInt, isRegex, isStr, sleep } from '../../common/utils.js';
 import { Element } from '../base/element.js';
-import { cls, setStyles } from './keyboard.utils.js';
+import { ClassName, setStyles } from './keyboard.utils.js';
 
 export class Keyboard {
   #element;
@@ -13,8 +13,8 @@ export class Keyboard {
   #active = {}; /* {key, initiator} */
   #keysMap = {}; /* {char, {key, hidden}} */
 
-  constructor({ keys = DEF_KEY_CHARS } = {}) {
-    this.#element = new Element({ tag: 'ul', className: cls.keyboard });
+  constructor({ keys = KEY_CHARS } = {}) {
+    this.#element = new Element({ tag: 'ul', className: ClassName.Keyboard });
     this.appendKeys(keys);
     this.#addInteractivity();
   }
@@ -55,7 +55,7 @@ export class Keyboard {
     }
     this.#active = { key, initiator: 'keydown' };
 
-    key.toggleClass(cls.keyActive);
+    key.toggleClass(ClassName.KeyActive);
     this.allowPointerEvents(false);
 
     this.#onClick?.(key.text, key);
@@ -75,7 +75,7 @@ export class Keyboard {
     }
     this.#active = null;
 
-    key.toggleClass(cls.keyActive);
+    key.toggleClass(ClassName.KeyActive);
     this.allowPointerEvents(true);
   };
 
@@ -117,9 +117,9 @@ export class Keyboard {
     }
     this.#active = { key };
 
-    key.toggleClass(cls.keyActive);
+    key.toggleClass(ClassName.KeyActive);
     await sleep(timeout);
-    key.toggleClass(cls.keyActive);
+    key.toggleClass(ClassName.KeyActive);
 
     this.#active = null;
   };
@@ -175,7 +175,7 @@ export class Keyboard {
       const key = new Element({
         tag: 'li',
         text: char,
-        className: cls.key,
+        className: ClassName.Key,
       });
       setStyles(key);
       this.#keysMap[char] = { key, hidden: false };
@@ -186,7 +186,7 @@ export class Keyboard {
   }
 
   clearActive() {
-    this.#active?.key?.toggleClass(cls.keyActive, false);
+    this.#active?.key?.toggleClass(ClassName.KeyActive, false);
     this.#active = null;
   }
 

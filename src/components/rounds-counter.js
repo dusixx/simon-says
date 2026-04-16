@@ -1,3 +1,4 @@
+import { ROUNDS_COUNT } from '../common/constants.js';
 import { isInt } from '../common/utils.js';
 import { Element } from './base/element.js';
 
@@ -7,7 +8,7 @@ export class RoundsCounter {
   #max;
   #value;
 
-  constructor({ start = 1, max = 5 } = {}) {
+  constructor({ start = 1, max = ROUNDS_COUNT } = {}) {
     if (!isInt(start) || !isInt(max) || start > max) {
       throw TypeError('integers expected (start <= max)');
     }

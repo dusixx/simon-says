@@ -1,4 +1,4 @@
-import { DEF_DIFFICULTY_VALUES } from '../common/constants.js';
+import { DIFFICULTY_VALUES } from '../common/constants.js';
 import { isFunc } from '../common/utils.js';
 import { Element } from './base/element.js';
 
@@ -6,7 +6,7 @@ export class Difficulty {
   #element;
   #onChange;
 
-  constructor(values = DEF_DIFFICULTY_VALUES) {
+  constructor(values = DIFFICULTY_VALUES) {
     if (!Array.isArray(values)) {
       throw TypeError('"values" array expected');
     }

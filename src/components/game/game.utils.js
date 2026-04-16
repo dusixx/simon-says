@@ -1,7 +1,7 @@
 import {
-  DEF_DIFFICULTY_VALUES,
-  DEF_KEY_CHARS,
+  DIFFICULTY_VALUES,
   difficultyLevel,
+  KEY_CHARS,
 } from '../../common/constants.js';
 import { getTypeName, rndInt } from '../../common/utils.js';
 
@@ -15,10 +15,10 @@ export const updateKeyboard = (keyboard, difficulty) => {
 
 export const generateSequence = ({
   round = 1,
-  difficulty = DEF_DIFFICULTY_VALUES[0],
+  difficulty = DIFFICULTY_VALUES[0],
 } = {}) => {
   return Array.from({ length: round * 2 }, (_) => {
     const { range } = difficultyLevel[difficulty.toLowerCase()];
-    return DEF_KEY_CHARS[rndInt(...range)];
+    return KEY_CHARS[rndInt(...range)];
   }).join('');
 };
