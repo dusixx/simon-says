@@ -17,7 +17,7 @@ export const StatusMessage = {
   Lost: 'You lost!🥴',
   Wrong: 'Wrong, try again!😟',
   Won: 'You won!🥳',
-  Right: 'Right, click Next!😎,',
+  Right: 'Right, click Next!😎',
 };
 
 export const ButtonCaption = {
