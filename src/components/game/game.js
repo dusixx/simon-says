@@ -144,6 +144,10 @@ export class Game {
   };
 
   handleRepeatClick = async () => {
+    if (this.attemptsLeft <= 0) {
+      btnRepeat.disabled = true;
+      return;
+    }
     statusBox.clear();
     await this.showSequence({ repeat: true });
     btnRepeat.disabled = true;
