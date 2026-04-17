@@ -1,9 +1,10 @@
 import {
   DIFFICULTY_VALUES,
   difficultyLevel,
+  getTypeName,
   KEY_CHARS,
-} from '../../common/constants.js';
-import { getTypeName, rndInt } from '../../common/utils.js';
+  rndInt,
+} from '../../common/index.js';
 
 export const updateKeyboard = (keyboard, difficulty) => {
   if (getTypeName(keyboard) !== 'Keyboard') {

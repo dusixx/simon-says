@@ -1,5 +1,4 @@
-import { DIFFICULTY_VALUES } from '../common/constants.js';
-import { isFunc } from '../common/utils.js';
+import { ClassName, DIFFICULTY_VALUES, isFunc } from '../common/index.js';
 import { Element } from './base/element.js';
 
 export class Difficulty {
@@ -11,7 +10,11 @@ export class Difficulty {
       throw TypeError('"values" array expected');
     }
     this.#element = new Element(
-      { tag: 'select', className: 'difficulty' },
+      {
+        tag: 'select',
+        className: ClassName.Difficulty,
+        id: ClassName.Difficulty,
+      },
       ...values.map(
         (value) => new Element({ tag: 'option', value, text: value })
       )

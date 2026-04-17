@@ -1,10 +1,4 @@
-import { getColorMixCSS } from '../../common/utils.js';
-
-export const ClassName = {
-  Key: 'key',
-  KeyActive: 'key--active',
-  Keyboard: 'keyboard',
-};
+import { getColorMixCSS } from '../../common/index.js';
 
 export const setStyles = ({ ref: { style } }) => {
   const mixed = getColorMixCSS();

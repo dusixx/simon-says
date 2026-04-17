@@ -1,4 +1,4 @@
-import { sleep } from '../../common/utils.js';
+import { sleep } from '../../common/index.js';
 import {
   btnRepeat,
   btnStart,
@@ -23,6 +23,7 @@ export class Game {
 
   constructor() {
     this.#init();
+    this.reset();
   }
 
   #init() {

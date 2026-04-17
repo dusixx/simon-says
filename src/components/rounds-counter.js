@@ -1,5 +1,4 @@
-import { ROUNDS_COUNT } from '../common/constants.js';
-import { isInt } from '../common/utils.js';
+import { ClassName, isInt, ROUNDS_COUNT } from '../common/index.js';
 import { Element } from './base/element.js';
 
 export class RoundsCounter {
@@ -17,7 +16,7 @@ export class RoundsCounter {
       text: start,
     });
     this.#element = new Element(
-      { className: 'rounds-counter' },
+      { className: ClassName.RoundsCounter },
       curRound,
       new Element({
         tag: 'span',

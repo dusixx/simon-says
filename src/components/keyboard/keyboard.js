@@ -1,10 +1,15 @@
 import {
+  ClassName,
   KEY_CHARS,
   KEY_HIGHLIGHT_MIN_TIMEOUT,
-} from '../../common/constants.js';
-import { isFunc, isInt, isRegex, isStr, sleep } from '../../common/utils.js';
+  isFunc,
+  isInt,
+  isRegex,
+  isStr,
+  sleep,
+} from '../../common/index.js';
 import { Element } from '../base/element.js';
-import { ClassName, setStyles } from './keyboard.utils.js';
+import { setStyles } from './keyboard.utils.js';
 
 export class Keyboard {
   #element;

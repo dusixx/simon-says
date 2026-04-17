@@ -1,4 +1,4 @@
-import * as refs from '../../common/elements.js';
+import * as refs from '../ui/index.js';
 
 export const {
   difficulty,

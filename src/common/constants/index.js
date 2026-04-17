@@ -1,3 +1,5 @@
+export * from './class-name.js';
+
 export const KEY_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 export const DIFFICULTY_VALUES = ['easy', 'medium', 'hard'];
 export const KEY_HIGHLIGHT_MIN_TIMEOUT = 300;
