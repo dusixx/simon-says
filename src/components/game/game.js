@@ -1,15 +1,15 @@
 import { sleep } from '../../common/index.js';
 import {
-  btnRepeat,
-  btnStart,
   ButtonCaption,
   ButtonMode,
   difficulty,
   HIGHLIGHT_DELAY,
   HIGHLIGHT_DURATION,
   keyboard,
+  repeatBtn,
   roundsCounter,
   SHOW_SEQUENCE_DELAY,
+  startBtn,
   statusBox,
   StatusMessage,
 } from './game.constants.js';
@@ -31,7 +31,7 @@ export class Game {
       updateKeyboard(keyboard, value);
     };
 
-    btnStart.onClick = async () => {
+    startBtn.onClick = async () => {
       if (this.startBtnMode === ButtonMode.Start) {
         await this.handleStartClick();
       } else {
@@ -39,7 +39,7 @@ export class Game {
       }
     };
 
-    btnRepeat.onClick = async () => {
+    repeatBtn.onClick = async () => {
       if (this.repeatBtnMode === ButtonMode.Repeat) {
         await this.handleRepeatClick();
       } else {
@@ -62,7 +62,7 @@ export class Game {
   reset() {
     this.attemptsLeft = 1;
 
-    btnRepeat.hide();
+    repeatBtn.hide();
     difficulty.disabled = false;
 
     roundsCounter.value = 1;
@@ -79,9 +79,9 @@ export class Game {
     this.attemptsLeft = 1;
 
     this.repeatBtnMode = ButtonMode.Repeat;
-    btnRepeat.text = ButtonCaption.Repeat;
-    btnRepeat.disabled = false;
-    btnRepeat.show();
+    repeatBtn.text = ButtonCaption.Repeat;
+    repeatBtn.disabled = false;
+    repeatBtn.show();
 
     difficulty.disabled = true;
     keyboard.repaint();
@@ -97,8 +97,8 @@ export class Game {
     repeat = false,
     delayBefore = SHOW_SEQUENCE_DELAY,
   } = {}) {
-    btnStart.disabled = true;
-    btnRepeat.disabled = true;
+    startBtn.disabled = true;
+    repeatBtn.disabled = true;
 
     this.lastSequence = repeat
       ? this.lastSequence
@@ -116,8 +116,8 @@ export class Game {
       duration: HIGHLIGHT_DURATION,
     });
 
-    btnStart.disabled = false;
-    btnRepeat.disabled = !this.attemptsLeft;
+    startBtn.disabled = false;
+    repeatBtn.disabled = !this.attemptsLeft;
   }
 
   handleWrongSequenceInput = () => {
@@ -132,43 +132,43 @@ export class Game {
   handleRightSequenceInput = () => {
     if (roundsCounter.value === roundsCounter.max) {
       statusBox.success(StatusMessage.Won);
-      btnRepeat.disabled = true;
+      repeatBtn.disabled = true;
     } else {
       statusBox.success(StatusMessage.Right);
 
-      btnRepeat.text = ButtonCaption.Next;
+      repeatBtn.text = ButtonCaption.Next;
       this.repeatBtnMode = ButtonMode.Next;
-      btnRepeat.disabled = false;
+      repeatBtn.disabled = false;
     }
     keyboard.disabled = true;
   };
 
   handleRepeatClick = async () => {
     if (this.attemptsLeft <= 0) {
-      btnRepeat.disabled = true;
+      repeatBtn.disabled = true;
       return;
     }
     statusBox.clear();
     await this.showSequence({ repeat: true });
-    btnRepeat.disabled = true;
+    repeatBtn.disabled = true;
     this.attemptsLeft -= 1;
   };
 
   handleNextClick = async () => {
-    btnRepeat.text = ButtonCaption.Repeat;
+    repeatBtn.text = ButtonCaption.Repeat;
     this.repeatBtnMode = ButtonMode.Repeat;
     roundsCounter.value += 1;
     await this.start();
   };
 
   handleStartClick = async () => {
-    btnStart.text = ButtonCaption.NewGame;
+    startBtn.text = ButtonCaption.NewGame;
     this.startBtnMode = ButtonMode.NewGame;
     await this.start();
   };
 
   handleNewGameClick = () => {
-    btnStart.text = ButtonCaption.Start;
+    startBtn.text = ButtonCaption.Start;
     this.startBtnMode = ButtonMode.Start;
     this.reset();
   };

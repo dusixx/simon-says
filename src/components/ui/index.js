@@ -20,20 +20,20 @@ export const statusBox = new StatusBox({
   id: ClassName.StatusBox,
 });
 
-export const btnStart = new Button({
+export const startBtn = new Button({
   text: 'Start🚀',
   className: ClassName.StartBtn,
 });
 
-export const btnRepeat = new Button({
+export const repeatBtn = new Button({
   text: 'Repeat the sequence',
   className: ClassName.RepeatBtn,
 });
 
 export const controls = new Element(
   { className: ClassName.Controls },
-  btnStart.underlyingElement,
-  btnRepeat.underlyingElement
+  startBtn.underlyingElement,
+  repeatBtn.underlyingElement
 );
 
 const stats = new Element(

@@ -4,8 +4,8 @@ export const {
   difficulty,
   keyboard,
   statusBox,
-  btnStart,
-  btnRepeat,
+  startBtn,
+  repeatBtn,
   roundsCounter,
 } = refs;
 
@@ -21,8 +21,8 @@ export const StatusMessage = {
 };
 
 export const ButtonCaption = {
-  Repeat: btnRepeat.text,
-  Start: btnStart.text,
+  Repeat: repeatBtn.text,
+  Start: startBtn.text,
   Next: 'Next',
   NewGame: 'New game',
 };
