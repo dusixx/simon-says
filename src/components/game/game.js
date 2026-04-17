@@ -121,7 +121,7 @@ export class Game {
   }
 
   handleWrongSequenceInput = () => {
-    if (!this.attemptsLeft) {
+    if (this.attemptsLeft <= 0) {
       statusBox.error(StatusMessage.Lost);
     } else {
       statusBox.error(StatusMessage.Wrong);
