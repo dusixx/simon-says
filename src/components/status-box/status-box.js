@@ -1,4 +1,4 @@
-import { Element } from '../base/element.js';
+import { Element } from '@/components';
 import { ERROR_CSS, SUCCESS_CSS } from './status-box.constants.js';
 
 export class StatusBox {

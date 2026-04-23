@@ -7,8 +7,8 @@ import {
   isRegex,
   isStr,
   sleep,
-} from '../../common/index.js';
-import { Element } from '../base/element.js';
+} from '@/common';
+import { Element } from '@/components';
 import { setStyles } from './keyboard.utils.js';
 
 export class Keyboard {

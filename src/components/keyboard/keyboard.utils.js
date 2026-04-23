@@ -1,4 +1,4 @@
-import { getColorMixCSS } from '../../common/index.js';
+import { getColorMixCSS } from '@/common';
 
 export const setStyles = ({ ref: { style } }) => {
   const mixed = getColorMixCSS();

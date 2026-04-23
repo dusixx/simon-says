@@ -1,5 +1,5 @@
-import { ClassName, isInt, ROUNDS_COUNT } from '../common/index.js';
-import { Element } from './base/element.js';
+import { ClassName, isInt, ROUNDS_COUNT } from '@/common';
+import { Element } from '@/components';
 
 export class RoundsCounter {
   #element;

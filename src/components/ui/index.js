@@ -1,12 +1,12 @@
-import { ClassName, getColorMixCSS } from '../../common/index.js';
-import { Element } from '../base/element.js';
+import { ClassName, getColorMixCSS } from '@/common';
 import {
   Button,
   Difficulty,
+  Element,
   Keyboard,
   RoundsCounter,
   StatusBox,
-} from '../index.js';
+} from '@/components';
 
 export const keyboard = new Keyboard();
 export const difficulty = new Difficulty();

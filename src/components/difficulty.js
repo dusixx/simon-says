@@ -1,5 +1,5 @@
-import { ClassName, DIFFICULTY_VALUES, isFunc } from '../common/index.js';
-import { Element } from './base/element.js';
+import { ClassName, DIFFICULTY_VALUES, isFunc } from '@/common';
+import { Element } from '@/components';
 
 export class Difficulty {
   #element;

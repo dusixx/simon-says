@@ -1,4 +1,4 @@
-import { isFunc } from '../../common/index.js';
+import { isFunc } from '@/common';
 import { Element } from './element.js';
 
 export class Button {

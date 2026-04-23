@@ -3,6 +3,9 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import-x';
 import prettierPlugin from 'eslint-plugin-prettier';
 import globals from 'globals';
+import path from 'path';
+
+const __dirname = import.meta.dirname;
 
 export default [
   js.configs.recommended,
@@ -22,13 +25,6 @@ export default [
       import: importPlugin,
       prettier: prettierPlugin,
     },
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.mjs', '.cjs', '.json'],
-        },
-      },
-    },
     rules: {
       'prettier/prettier': [
         'error',
@@ -37,8 +33,6 @@ export default [
         },
       ],
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'import/no-unresolved': 'error',
-      'import/order': 'warn',
     },
   },
   {

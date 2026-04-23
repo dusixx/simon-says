@@ -4,7 +4,7 @@ import {
   getTypeName,
   KEY_CHARS,
   rndInt,
-} from '../../common/index.js';
+} from '@/common';
 
 export const updateKeyboard = (keyboard, difficulty) => {
   if (getTypeName(keyboard) !== 'Keyboard') {

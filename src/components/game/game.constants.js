@@ -1,4 +1,4 @@
-import * as refs from '../ui/index.js';
+import * as refs from '@/components/ui';
 
 export const {
   difficulty,
@@ -31,5 +31,5 @@ export const ButtonMode = {
   Repeat: 'repeat',
   Start: 'start',
   Next: 'next',
-  NewGame: 'newgame,',
+  NewGame: 'new-game,',
 };

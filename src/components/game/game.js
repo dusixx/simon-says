@@ -1,4 +1,4 @@
-import { sleep } from '../../common/index.js';
+import { sleep } from '@/common';
 import {
   ButtonCaption,
   ButtonMode,
