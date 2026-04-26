@@ -1,0 +1,14 @@
+@import './base/reset';
+@import './base/base';
+@import './vendors/modern-normalize';
+@import './utils/funcs';
+@import './utils/mixins';
+
+@import './components/wrapper';
+@import './components/keyboard';
+@import './components/user-input';
+@import './components/btn';
+@import './components/controls';
+@import './components/stats';
+@import './components/header';
+@import './components/logo';

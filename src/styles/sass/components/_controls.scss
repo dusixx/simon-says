@@ -1,0 +1,21 @@
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: smooth-out(375px, 30px, 739px, 100px);
+  width: 100%;
+}
+
+.controls__start,
+.controls__repeat {
+  width: 50%;
+  min-height: 76px;
+  min-width: 40px;
+
+  @media screen and (width > 620px) {
+    min-height: 60px;
+  }
+}
+
+.controls__repeat {
+  background-color: #31a115;
+}

@@ -1,0 +1,17 @@
+export const ClassName = {
+  Key: 'key',
+  KeyActive: 'key--active',
+  Keyboard: 'keyboard',
+  StatusBox: 'user-input',
+  StartBtn: 'controls__start btn-primary',
+  RepeatBtn: 'controls__repeat btn-primary',
+  Controls: 'controls',
+  Stats: 'stats',
+  Logo: 'logo',
+  Header: 'header',
+  HeaderWrapper: 'header__wrapper',
+  Main: 'main',
+  MainWrapper: 'main__wrapper',
+  Difficulty: 'difficulty',
+  RoundsCounter: 'rounds-counter',
+};

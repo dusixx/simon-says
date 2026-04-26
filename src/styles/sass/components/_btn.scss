@@ -1,0 +1,33 @@
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: inherit;
+  border-style: none;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  @extend .btn;
+
+  padding: 6px;
+
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.06rem;
+  text-transform: uppercase;
+
+  color: rgb(255, 225, 253);
+  color: white;
+  background-color: rgb(112, 55, 204);
+  border-radius: 40px;
+
+  &:disabled {
+    @include non-interactive {
+      opacity: 0.4;
+    }
+  }
+}
