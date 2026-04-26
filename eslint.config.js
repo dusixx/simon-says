@@ -3,9 +3,6 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import-x';
 import prettierPlugin from 'eslint-plugin-prettier';
 import globals from 'globals';
-import path from 'path';
-
-const __dirname = import.meta.dirname;
 
 export default [
   js.configs.recommended,
